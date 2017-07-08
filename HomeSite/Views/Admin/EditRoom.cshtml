@@ -1,0 +1,33 @@
+﻿@model HomeSite.Models.Room
+
+@{
+    ViewBag.Title = "EditRoom";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<table>
+    <tr>
+        <th>Название</th>
+        <th>Изображения</th>
+        <th>Кровати</th>
+        <th>Удобства</th>
+        <th>Вместимость</th>
+        <th>Цена</th>
+    </tr>
+    <tr>
+        @using (Html.BeginForm("SaveRoom", "Admin", FormMethod.Post))
+        {
+            <td>
+                @Html.HiddenFor(x => x.roomID)
+            @Html.TextBoxFor(x => x.Name)
+        </td>
+                <td>@Html.TextBoxFor(x => x.nameImage)</td>
+                <td>@Html.TextBoxFor(x => x.Beds)</td>
+                <td>@Html.TextBoxFor(x => x.Options)</td>
+                <td>@Html.TextBoxFor(x => x.Size)</td>
+                <td>@Html.TextBoxFor(x => x.Cost)</td>
+                <td class="buttonRow"><input type="submit" value="Сохранить" /></td>
+                <td class="buttonRow">@Html.ActionLink("Отмена", "Admin")</td>
+        }
+    </tr>
+</table>

@@ -1,0 +1,30 @@
+﻿@model HomeSite.Models.Order
+
+@{
+    ViewBag.Title = "EditOder";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<table>
+    <tr>
+        <th>ID Комнаты</th>
+        <th>Прибытие</th>
+        <th>Отбытие</th>
+        <th>ФИО</th>
+        <th>Статус</th>
+    </tr>
+    <tr>
+        @using (Html.BeginForm("SaveOrder", "Admin", FormMethod.Post))
+        {
+            <td>@Html.HiddenFor(x => x.orderID)
+                @Html.TextBoxFor(x => x.roomID)</td>
+            <td>@Html.TextBoxFor(x => x.incoming)</td>
+            <td>@Html.TextBoxFor(x => x.outcoming)</td>
+            <td>@Html.TextBoxFor(x => x.autor)</td>
+            <td>@Html.TextBoxFor(x => x.registrate)</td>
+            <td class="buttonRow"><input type="submit" value="Сохранить" /></td>
+            <td class="buttonRow">@Html.ActionLink("Отмена", "Admin")</td>
+        }
+    </tr>
+</table>
+

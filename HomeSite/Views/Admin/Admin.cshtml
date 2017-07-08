@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div>
+    <div class="head_type">Комнаты</div>
+    @Html.Action("ListRooms")
+</div>
+<div>
+    <div class="head_type">Заказы</div>
+    @Html.Action("ListOrders")
+</div>
+

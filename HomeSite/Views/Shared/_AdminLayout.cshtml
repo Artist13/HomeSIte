@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/Content/AdminLayout.css" />
+    <title></title>
+</head>
+<body>
+    <div id="menu_bar">
+        <div id="logout">
+            @Html.ActionLink("Выход", "LogOut")
+        </div>
+    </div>
+    <div id="content"> 
+        @RenderBody()
+    </div>
+</body>
+</html>

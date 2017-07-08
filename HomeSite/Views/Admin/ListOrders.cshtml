@@ -1,0 +1,54 @@
+﻿@model IQueryable<HomeSite.Models.Order>
+
+@{
+    Layout = null;
+}
+
+<div>
+    <table>
+        <tr>
+            <th>ID Заказа</th>
+            <th>ID Комнаты</th>
+            <th>Прибытие</th>
+            <th>Отбытие</th>
+            <th>ФИО</th>
+            <th>Статус</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.orderID</td>
+                <td>@item.roomID</td>
+                <td>@item.incoming</td>
+                <td>@item.outcoming</td>
+                <td>@item.autor</td>
+                <td>@switch (item.registrate)
+                            {
+                                case "0": <span>Не подтвержден</span>; break;
+                                case "1": <span>Подтвержден</span>; break;
+                                default: <span>Не известен</span>; break;
+                            }
+                </td>
+                <td class="buttonRow">
+                    @using (Html.BeginForm("ConfirmOrder", "Admin", FormMethod.Post))
+                    {
+                        <input type="text" name="id" value=@item.orderID style="visibility: hidden; height:0px; width:0px;" />
+                        <input type="submit" name="confirm" value="Подтвердить" />
+                    }
+                    @using (Html.BeginForm("EditOrder", "Admin", FormMethod.Post))
+                    {
+                        <input type="text" name="id" value=@item.orderID style="visibility: hidden; height:0px; width:0px;" />
+                        <input type="submit" name="edit" value="Редактировать" />
+                    }
+                    @using (Html.BeginForm("DeleteOrder", "Admin", FormMethod.Post))
+                    {
+                        <input type="text" name="id" value=@item.orderID style="visibility: hidden; height:0px; width:0px;" />
+                        <input type="submit" name="delete" value="Удалить" />
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+

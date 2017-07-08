@@ -1,0 +1,10 @@
+#container_contacts{
+    position:relative;
+    margin:30px auto;
+	width: 500px;
+    padding:20px;
+
+    border: 0px solid rgba(47, 46, 46, 1);
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+}

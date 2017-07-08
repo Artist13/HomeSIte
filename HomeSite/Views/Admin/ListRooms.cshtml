@@ -1,0 +1,46 @@
+﻿@model IQueryable<HomeSite.Models.Room>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<div>
+    <table>
+        <tr>
+            <th>ID комнаты</th>
+            <th>Название</th>
+            <th>Изображения</th>
+            <th>Кровати</th>
+            <th>Удобства</th>
+            <th>Вместимость</th>
+            <th>Цена</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.roomID</td>
+                <td>@item.Name</td>
+                <td>@item.nameImage</td>
+                <td>@item.Beds</td>
+                <td>@item.Options</td>
+                <td>@item.Size</td>
+                <td>@item.Cost</td>
+                <td class="buttonRow">
+                    @using (Html.BeginForm("EditRoom", "Admin", FormMethod.Post))
+                    {
+                        <input type="text" name="id" value=@item.roomID style="visibility: hidden; height:0px; width:0px" />
+                        <input type="submit" name="edit" value="Редактировать" />
+                    }
+                    @using (Html.BeginForm("DeleteRoom", "Admin", FormMethod.Post))
+                    {
+                        <input type="text" name="id" value=@item.roomID style="visibility: hidden; height:0px; width:0px;" />
+                        <input type="submit" name="delete" value="Удалить" />
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+    
+</div>

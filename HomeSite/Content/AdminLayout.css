@@ -1,0 +1,30 @@
+﻿#content{
+    position:relative;
+    margin:0 auto;
+}
+#menu_bar{
+    height:20px;
+}
+#logout{
+    width:50px;
+    float:right;
+}
+.head_type{
+    background-color: darkgrey;
+    width: inherit;
+    height: 50px;
+}
+td{
+    border:2px solid;
+	max-width:260px;
+}
+.buttonRow{
+    border: 0px;
+	max-width:300px;
+}
+.buttonRow form{
+    display:inline-block;
+}
+.buttonRow input{
+    
+}

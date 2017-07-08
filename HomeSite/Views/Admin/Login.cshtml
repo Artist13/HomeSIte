@@ -1,0 +1,17 @@
+﻿@model HomeSite.Models.Admin
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+
+    @using(Html.BeginForm("Admin", "Admin"))
+    {
+        <label>Login:</label>
+        @Html.TextBox("login", Model.Login);
+        <label>Password:</label>
+        @Html.Password("pass", Model.Pass);
+        <button type="submit">Войти</button>
+    }

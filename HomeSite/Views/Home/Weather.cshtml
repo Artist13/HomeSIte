@@ -1,0 +1,21 @@
+﻿@model HomeSite.Models.WeatherDate
+
+<div id="wrapper_top">
+	<div id="container_city">
+    <span>Ейск</span>
+	</div>
+	<div id="container_date">
+    <span>@Model._lastUpdate</span>
+	</div>
+</div>
+<div id="weather_img">
+    <img src=@Model.Weather[0].Icon />
+</div>
+<div id="container_temperature">
+    <span>@Model.Main.Temp C&deg;</span>
+</div>
+
+<div id="container_weather">
+    <span>@Model.Weather[0].Description</span>
+</div>
+

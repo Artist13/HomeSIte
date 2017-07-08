@@ -1,0 +1,71 @@
+﻿@model IQueryable<HomeSite.Models.Room>
+
+
+<div id="container_price">
+    <div id="header_price">
+        <span> Наши номера </span>
+    </div>
+    <div id="price">
+        @foreach (var p in Model)
+        {
+            <div class="room">
+                <div class="container_image">
+                    
+					@using (Html.BeginForm("AboutRoom", "Room", FormMethod.Post))
+                    {
+                        <input type="text" name="id" value=@p.roomID style="visibility: hidden; height:0px;" />
+                        <input type="image" src=~/Content/Media/Rooms/@p.nameImage.Split(',')[0] name="aboutroom" value="О номере" />
+                    }
+                </div>
+                <div class="container_name">
+                    <span>@p.Name</span>
+                </div>
+                <div class="container_options">
+                    <div class="option">
+                        <ul>
+                            @for (int i = 0; i < 3; i++)
+                            {
+                                switch (@p.Options.Split(',')[i])
+                                {
+                                    case "Кондиционер": ViewBag.icon = "cond.png"; break;
+                                    case "Wi-fi": ViewBag.icon = "wifi.png"; break;
+                                    case "Телевизор": ViewBag.icon = "tv.png"; break;
+                                    default: ViewBag.icon = "default.png"; break;
+                                }
+                                <li><img src=~/Content/Media/Icons/@ViewBag.icon /><div>@p.Options.Split(',')[i]</div></li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="option">Кровати: </div>
+                    <div id="beds" class="option">
+                        <ul>
+                            @foreach (var bed in p.Beds.Split(','))
+                            {
+                                <li><span>@bed</span></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="container_cost">
+                    <span>от</span>
+                    <br />
+                    <span class="number_cost">@p.Cost руб</span>
+                </div>
+                <div class="about_room">
+                    @using (Html.BeginForm("AboutRoom", "Room", FormMethod.Post))
+                    {
+                        <input type="text" name="id" value=@p.roomID style="visibility: hidden; height:0px;" />
+                        <input type="submit" name="aboutroom" value="О номере" />
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+
+

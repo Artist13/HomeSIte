@@ -1,0 +1,84 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="yandex-verification" content="c354266884d9041a" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" media='(min-width: 1080px)' href="~/Content/Layout.css" />
+	<link rel='stylesheet' media='(max-width: 1080px)' href='~/Content/LayoutMobile.css' />
+    <link rel="stylesheet" href="~/Content/Entertainment.css" />
+    <link rel="stylesheet" href="~/Content/AboutUs.css" />
+    <link rel="stylesheet" href="~/Content/Contacts.css" />
+    <link rel="stylesheet" href="~/Content/Rooms.css" />
+	<link rel="SHORTCUT ICON" href="~/Content/Media/em2.png" type="image/x-icon">
+    <title>Летний отдых в Ейске</title>
+</head>
+<body>
+	
+    <div id="backI">
+        <div id="header">
+            <div id="logo">
+                <div id="container_logo">
+                    <img src="~/Content/Media/em2.png" />
+                </div>
+            </div>
+            <div id="menu">
+                    <div id="meta_buttons">
+                        <div id="buttons">
+                            @Html.ActionLink("Главная", "Index", "Home", null, new { @style = "width:120px", @target = "_self" })
+                            @Html.ActionLink("О нас", "AboutUs", "Home", null, new { @style = "width:105px", @target = "_self" })
+                            @Html.ActionLink("Номера и цены", "RoomsPrice", "Room", null, new { @style = "width: 170px", @target = "_self" })
+                            @Html.ActionLink("Развлечения", "Entertainment", "Home", null, new { @style = "width:150px", @target = "_self" })
+                            @Html.ActionLink("Контакты", "Contacts", "Home", null, new { @style = "width:122px", @target = "_self" })
+                            <a href="#" id="last_a"></a>
+                        </div>
+                    <div id="last_button">
+                        @Html.ActionLink("Забронировать", "RoomsPrice", "Room")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="free_space"></div>
+		<div id="weather">
+    		@Html.Action("Weather", "Home")
+		</div>
+        @RenderBody()
+        <div id="footer_container">
+            <div id="container_footer_bg">
+                <div id="footer_bg"></div>
+            </div>
+            <div id="footer">
+                <div class="footer_block">
+					<div class="footer_liner" id="footer_liner1"></div>
+               		<div class="footer_text" id="footer_text1">
+                    	<p>Бронирование</p>
+                    	<p style="font-weight:bold">+7(988)362-22-33</p>
+                	</div>
+				</div>
+                <div class="footer_block">
+					<div class="footer_liner" id="footer_liner2"></div>
+                	<div class="footer_text" id="footer_text2">
+                    	<p>Мы в соц сетях</p>
+                    	<p class="socialicon" ><a href="https://vk.com/yeiskresort"><img src="~/Content/Media/Icons/VkIcon.png" /></a></p>
+                    	<p class="socialicon"><a href="https://www.airbnb.ru/rooms/16196140?preview_for_ml"><img src="~/Content/Media/Icons/AirbnbIcon.png" /></a></p>
+                    	<p class="socialicon" ><a href="https://ok.ru/profile/574828985582"><img src="~/Content/Media/Icons/OkIcon.png" /></a></p>
+                	</div>
+				</div>
+                <div class="footer_block">
+					<div class="footer_liner" id="footer_liner3"></div>
+                	<div class="footer_text" id="footer_text3">
+                    	<p>Copyright</p>
+                    	<p style="font-weight:bold">2017</p>
+                	</div>
+				</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

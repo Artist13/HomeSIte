@@ -1,0 +1,263 @@
+﻿#container_price{
+    min-width:979px;
+    left:1px;
+    position:relative;
+    width:979px;
+    background-color:rgba(255,255,255,1);
+    margin-top:10px;
+    padding-bottom:1px;
+    border-radius: 10px;
+}
+#price{
+    width:100%;
+
+}
+#header_price{
+    height:60px;
+    padding-top:30px;
+    padding-left:30px;
+    padding-right:60px;
+
+}
+#header_price span{
+    font-size:24px;
+    color:#605E5E !important;
+    fill:#605E5E !important;
+    font-family:'raleway','sans-serif';
+    line-height:normal;
+}
+
+.room{
+    position: relative;
+    margin-left:20px;
+	margin-bottom:10px;
+    top:0px;
+    width:939px;
+    height:200px;
+    background-color:rgba(244,244,244,1);
+    border-radius:10px;
+}
+.container_image{
+    position:absolute;
+    left:10px;
+    top:18px;
+    width:240px;
+    height:170px;
+    overflow:hidden;
+}
+.container_image:hover{
+    box-shadow: 0px 0px 10px 2px darkslategrey;
+}
+.container_image input{
+	border: 0px;
+    height:175px;
+	width:303px;
+    position:absolute;
+    left:-46px;
+    top:-5px;
+}
+.container_name{
+    position:absolute;
+    left:270px;
+    top:34px;
+}
+.container_name span{
+    color:#605E5E !important;
+    fill:#605E5E !important;
+    font-family:"Open Sans";
+    font-size:18px;
+}
+.container_options{
+    position:absolute;
+    left:265px;
+    top:60px;
+}
+.container_options li{
+    font-family:'Times New Roman', Times, serif;
+    font-size:13px;
+    list-style-type:none;
+}
+.container_options li div{
+    position:relative;
+    display:inline-block;
+    top:-7px;
+    left: 4px;
+    visibility:hidden;
+}
+.container_options li:hover div{
+    visibility:visible;
+}
+.option{
+    max-height:90px;
+    display:inline-block;
+    vertical-align:middle;
+    font-size:15px;
+}
+#beds li{
+    font-size:15px;
+}
+.option img{
+    width:25px;
+    height:25px;
+}
+.container_cost{
+    text-align:center;
+    position:absolute;
+    left:803px;
+    top:91px;
+}
+.container_cost span{
+    font-size:14px;
+    font-family:sans-serif;
+}
+.number_cost{
+    font-size:20px;
+}
+.about_room input{
+    width:100px;
+    position:relative;
+    top:145px;
+    left:672px;
+}
+.about_room input:hover{
+    width:100px;
+    position:relative;
+    top:145px;
+    left:672px;
+	color: white;
+    background-color: rgb(35, 137, 201);
+    border: 1px #8ec4e7;
+}
+
+#back{
+    display:inline-block;
+    position:relative;
+    top:-3px;
+}
+#room_name{
+    display:inline-block;
+    position:relative;
+    font-size:24px;
+    color:#605E5E ;
+    font-family:'raleway','sans-serif';
+    margin-bottom:10px;
+    margin-left:35px;
+}
+#room_overview{
+    max-width:100%;
+    padding:15px;
+}
+#room_overview a{
+    text-decoration:none;
+    color:white;
+}
+#back a{
+    font-size:15px;
+    color:#605E5E ;
+}
+#room_img{
+    width: 649px;
+	height: 408px;
+	overflow: hidden;
+	position: relative;
+    display: inline-block;
+}
+
+.slidewrapper{
+	position: absolute;
+	left:0;
+	top:0;
+	height:100px;
+	margin: 0;
+	padding: 0;
+}
+
+.slide {
+    width: 649px;
+    height: 408px;
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+#prev_slide{
+    position:absolute;
+    top:194px;
+    left:-18px;
+}
+#next_slide{
+    position:absolute;
+    top:194px;
+    left:612px;
+}
+#room_img ul img{
+    width:649px;
+    height:408px;    
+}
+#buy{
+    display:inline-block;
+    width:250px;
+    position:absolute;
+    margin: 0px 25px;
+    top:51px;
+	border:2px solid;
+	border-color:#d6d4d4;
+	border-radius:15px;
+	padding:10px;
+}
+#buy form{
+    margin-top:20px
+}
+#buy input{
+    width:241px;
+    max-width:250px;
+    padding-left:5px;
+}
+#buy span{
+    font-size:14px;
+    font-family:sans-serif;
+    margin-left:20px;
+}
+#buy .number_cost{
+    font-size:30px;
+    font-family:cursive;
+}
+#buy form span{
+    color:rgb(35, 137, 201);
+    font-size:15px;
+    margin:0px;
+    display:block;
+}
+#buy #push{
+    font:italic normal normal 16px/1.4em 'times new roman',times,serif;
+    width:250px;
+    height:30px;
+    text-align:center;
+    margin-top:20px;
+    background-color:#8ec4e7;
+    color:white;
+    border: 2px solid rgba(35, 137, 201, 1);
+}
+#photo_galery{
+    padding:0 15px 15px;
+}
+#photo_galery img{
+    width:58px;
+    height:48px;
+}
+.photo{
+    display:inline-block;
+}
+#room_param{
+    margin:0 30px;
+    font-size:17px;
+    font-family:initial;
+}
+.param{
+	width:649px;
+	height:50px;
+}
+.header_param{
+    font-weight:600;
+}

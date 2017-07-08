@@ -1,0 +1,53 @@
+﻿#container_aboutus{
+    position:relative;
+    max-width:100%;
+    padding:10px;
+
+    border: 0px solid rgba(47, 46, 46, 1);
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+
+}
+#overview .aboutus_header{
+    line-height:1.3em;
+    font: normal normal normal 21px/1.4em raleway,sans-serif;
+    color: #2389C9;
+    margin:0px;
+}
+.container_aboutus_text{
+    position:relative;
+    width:280px;
+    display:inline-block;
+    margin:0 25px;
+    vertical-align:top;
+}
+.container_aboutus_text p{
+    line-height:1.2em;
+    font: italic normal normal 16px/1.4em 'times new roman',times,serif;
+    color: #605E5E;
+    margin:0;
+    letter-spacing:normal;
+    display:block;
+}
+div.liners{
+    position:relative;
+    width:33px;
+    margin:20px 0;
+
+    border-bottom: 2px solid rgba(35, 137, 201, 1);
+    height: 0 !important;
+    min-height: 0 !important;
+}
+#container_aboutus_image{
+    position:relative;
+    width:240px;
+    height:450px;
+    display:inline-block;
+    margin:60px 25px;
+
+    background-size:cover;
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-image:url(Media/aboutus.jpg);
+}
+

@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="back_image"></div>
+<div id="container_entertainment_bg">
+    <div id="entertainment_bg"></div>
+    <div id="page_container">
+        <div id="content_header">
+            <div id="container_helper_header">
+                <div id="help_header">
+                    <span id="span_header">
+                        Добро пожаловать в Ейск
+                    </span>
+                    <div id="liner"></div>
+                    <span>
+                        Ниже Вы можете ознакомится с информацией, которая поможет сделать Ваш отдых еще лучше
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div id="container_help">
+            <div class="container_helper">
+                <div class="helper_text">
+                    <p style="font: normal normal normal 21px/1.4em raleway,sans-serif; color:#2389C9">Развлечения</p>
+                    <p>&nbsp</p>
+                    <p>Город курорт Ейск славится своими пляжами с очень теплой водой и парками в которых можно найти различные развлечения.</p>
+                </div>
+                <div class="helper_line"></div>
+                <div class="more_helper">
+                    @Html.ActionLink("Узнать подробнее", "Entertainment")
+                </div>
+            </div>
+            <div class="container_helper">
+                <div class="helper_text">
+                    <p style="font: normal normal normal 21px/1.4em raleway,sans-serif; color:#2389C9">Номера и цены</p>
+                    <p>&nbsp</p>
+                    <p>Мы предлагаем вам номера с различными удобствами. Ознакомится с ними Вы можете здесь.</p>
+                </div>
+                <div class="helper_line"></div>
+                <div class="more_helper">
+                    @Html.ActionLink("Узнать подробнее", "RoomsPrice", "Room")
+                </div>
+            </div>
+            <div class="container_helper">
+                <div class="helper_text">
+                    <p style="font: normal normal normal 21px/1.4em raleway,sans-serif; color:#2389C9">Расположение</p>
+                    <p>&nbsp</p>
+                    <p>Номера расположены очень близко к морю. В курортной зоне города. </p>
+                </div>
+                <div class="helper_line"></div>
+                <div class="more_helper">
+                    @Html.ActionLink("Узнать подробнее", "AboutUs")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

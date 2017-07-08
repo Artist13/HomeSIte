@@ -1,0 +1,45 @@
+﻿@model HomeSite.Models.FeedbackForm
+
+@{
+    ViewBag.Title = "Contacts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel='stylesheet' media='(max-width: 1000px)' href='ContactsMobile.css' />
+<div id="back_image_cont"></div>
+<div id="container_entertainment_bg">
+    <div id="entertainment_bg"></div>
+    <div id="page_container">
+        <div id="container_entertainment_header">
+            <div id="entertainment_header">
+                <span>Контакты</span>
+            </div>
+        </div>
+        <div id="container_overview">
+            <div id="overview">
+                <span>Ниже Вы сможете найти информацию, чтобы связаться с нами. Если у Вас возникнут какие-либо вопросы, можете задать их непосредственно здесь. Укажите адресс своей почты, чтобы мы могли Вам ответить.</span>
+            </div>
+        </div>
+        <div id="container_contacts">
+            <div id="contacts">
+                <div class="liners"></div>
+                <span>Отдых в Ейске</span>
+                <p>Ейск, Краснодарский край, Россия</p>
+                <p></p>
+                <p>Тел.:+7(988)362-22-33 </p>
+            </div>
+            <div id="letter">
+                @using (Html.BeginForm("Contacts", "Home", FormMethod.Post, new { id = "contact-form" }))
+            {
+                    @Html.TextBoxFor(model => model.Name, new { @placeholder = "Имя" })
+                    @Html.TextBoxFor(model => model.Email, new { @placeholder = "E-mail" })
+                    @Html.TextBoxFor(model => model.Them, new { @placeholder = "Тема" })
+                    @Html.TextAreaFor(model => model.Mes, new { @placeholder = "Сообщение" })
+                    <input id="send_message" class="form-button" type="submit" value="Отправить" />
+                }
+            </div>
+            <div id="map">
+                <iframe src="https://www.google.com/maps/embed/v1/view?zoom=17&maptype=satellite&center=46.7195%2C38.2664&key=AIzaSyBXYUJuhO2MkQSJwfHAmyGLFcaAl-o9bks" width="926" height="244" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+﻿CREATE TABLE Rooms
+(
+	[Id] INT NOT NULL IDENTITY PRIMARY KEY,
+	[nameImage] NVARCHAR(MAX),
+	[Name] NVARCHAR(100),
+	[Beds] NVARCHAR(MAX),
+	[Cost] DECIMAL(18,2),
+	[Options] NVARCHAR(MAX),
+	[Size] INT
+)

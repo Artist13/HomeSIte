@@ -1,0 +1,124 @@
+﻿#mes_success{
+    position:fixed;
+    top:0px;
+    width:100%;
+    height:100%;
+    background:rgba(50,50,50,0.95);
+    z-index:999;
+    padding-top:15%;
+
+    text-align:center;
+    line-height:1.2em;
+    font: normal normal normal 37px/1.4em museo-slab-w01-100,serif;
+    color: #2389C9;
+}
+#mes_success div{
+    margin:2% auto;
+    width:17%;
+    height:6%;
+    background-color:rgba(240,240,245,1);
+    border-radius:10px;
+
+    font: normal normal normal 30px/1.4em museo-slab-w01-100,serif;
+}
+#mes_success a{
+    text-decoration:none;
+    color: #2389C9;
+}
+
+
+#back_image_cont{
+    z-index:-1;
+    top:0px;
+    height:100%;
+    width:100%;
+    position:fixed;
+    transform: matrix(1,0,0,1,0,0);
+    visibility:inherit;
+    opacity:1;
+    background-size:cover;
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-image:url(Media/море.jpg);
+    transform:translate3d(0px, 0px, 0px);
+}
+.adress{
+    top:190px !important; 
+}
+#container_contacts{
+    position:relative;
+    margin:30px auto;
+    max-width:980px;
+    padding:20px;
+
+    border: 0px solid rgba(47, 46, 46, 1);
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+}
+#contacts{
+    position:relative;
+    top:-120px;
+    width:286px;
+    display:inline-block;
+}
+#contacts span{
+    line-height:1.2em;
+    font: normal normal normal 37px/1.4em museo-slab-w01-100,serif;
+    color: #2389C9;
+}
+#contacts p{
+    line-height:1.2em;
+    font: italic normal normal 16px/1.4em 'times new roman',times,serif;
+    color: #605E5E;
+    margin:0px;
+    padding:0px;
+}
+#letter{
+    position:relative;
+    width:621px;
+    display:inline-block;
+}
+#map{
+    position:relative;
+    width:926px;
+    height:244px;
+    margin:20px 10px;
+}
+input{
+    font: italic normal normal 16px/1.4em 'times new roman',times,serif;
+    background-color: rgba(255, 255, 255, 1);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 2px solid rgba(35, 137, 201, 1);
+    color: #8ec4e7;
+    margin: 0 0 5px;
+    width: 100%;
+    height:30px;
+    padding-left:5px;
+}
+textarea{
+    min-height: 130px;
+    resize: none;
+    font: italic normal normal 16px/1.4em 'times new roman',times,serif;
+    background-color: rgba(255, 255, 255, 1);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 2px solid rgba(35, 137, 201, 1);
+    color: #8ec4e7;
+    margin: 0 0 5px;
+    width: 100%;
+    height:140px;
+    padding-left: 5px;
+}
+#send_message{
+    background-color: rgba(35, 137, 201, 1);
+    font: normal normal normal 16px/1.4em raleway,sans-serif;
+    border: 0;
+    color: #FFFFFF;
+    cursor: pointer;
+    float: right;
+    margin: 0;
+    max-width: 35%;
+    border-radius: 0;
+    padding: 5px;
+}
