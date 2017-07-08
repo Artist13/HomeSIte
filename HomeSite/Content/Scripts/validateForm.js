@@ -1,7 +1,7 @@
-﻿function validate_form() {
+﻿function validate_form(form) {
     valid = true;
 
-    if (document.getElementById("Email").value == "") {
+    if (document.getElementById("email").value == "") {
         alert("Пожалуйста заполните поле 'E-mial'");
         valid = false;
     }
@@ -9,6 +9,15 @@
         alert("Пожалуйста заполните поле 'Имя'");
         valid = false;
     }
-
-    return valid;
+    if (valid)
+    {
+        document.getElementById('mask').style.display = "block";
+        setTimeout(redirect, 3000);
+    }
+    
+    return false;
+}   
+function redirect()
+{
+    document.getElementById('reserv').submit();
 }

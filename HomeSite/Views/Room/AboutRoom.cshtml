@@ -11,7 +11,16 @@
 <script src="@Url.Content("~/Content/Scripts/buy_menu.js")"> </script>
 <script src="@Url.Content("~/Content/Scripts/validateForm.js")"></script>
 
-
+<div id="mask">
+    <div class="text_in_blur">
+        <span>
+            Ваша заявка зарегестрирована. Мы свяжемся с Вами для уточнения деталей.
+        </span>
+        <span>
+            Через 5 секунд вы вернетесь на главную страницу.
+        </span>
+    </div>
+</div>
 <div id="back_image"></div>
 <div id="container_entertainment_bg">
     <div id="entertainment_bg"></div>
@@ -49,7 +58,7 @@
                         <span class="number_cost">@Model.Cost руб</span>
                         <br />
                         <span>за ночь</span>
-                        @using (Html.BeginForm("RoomsPrice", "Room", FormMethod.Post, new { @onsubmit = "return validate_form();" }))
+                        @using (Html.BeginForm("RoomsPrice", "Room", FormMethod.Post, new { @id = "reserv", @onsubmit = "return validate_form();" }))
                         {
                             
                             <input type="text" name="id" hidden="hidden" value=@Model.roomID />

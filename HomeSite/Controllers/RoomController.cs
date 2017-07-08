@@ -49,15 +49,17 @@ namespace HomeSite.Controllers
             message.From = new MailAddress("Registrator@sovetov9.ru");
             message.To.Add(new MailAddress("nikita-podhvatoff@yandex.ru"));
             message.Subject = "Бронь";
-            message.Body = person + '\n' + Email + '\n' + tel + '\n' + db.Rooms.First(x=>x.roomID == ID).Name + '\n' + "Заезд: " + incoming + "Выезд: " + outcoming + '\n' + "Дата подачи: " + DateTime.Now.ToString();
-            SmtpClient client = new SmtpClient("mail.sovetov9.ru");
-            client.EnableSsl = true;
-            client.Port = 587;
+            message.Body = person + '\n' + Email + '\n' + tel + '\n' + db.Rooms.First(x => x.roomID == ID).Name + '\n' + "Заезд: " + incoming + "Выезд: " + outcoming + '\n' + "Дата подачи: " + DateTime.Now.ToString();
+            SmtpClient client = new SmtpClient("mail.sovetov9.ru")
+            {
+                EnableSsl = true,
+                Port = 587,
 
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("Registrator@sovetov9.ru", "4arpZ0M!");
-
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential("Registrator@sovetov9.ru", "4arpZ0M!")
+            };
+       
             try
             {
                 client.Send(message);
