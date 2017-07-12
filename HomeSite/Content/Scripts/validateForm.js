@@ -11,13 +11,16 @@
     }
     if (valid)
     {
-        document.getElementById('mask').style.display = "block";
-        setTimeout(redirect, 3000);
+        
     }
     
     return false;
 }   
-function redirect()
+function OnSuccess()
 {
-    document.getElementById('reserv').submit();
+    document.getElementById('mask').style.display = "block";
+}
+function OnFailure()
+{
+    alert("Что-то пошло не так")
 }

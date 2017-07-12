@@ -41,8 +41,7 @@ namespace HomeSite.Controllers
             int ID = Int32.Parse(id);
             return View(db.Rooms.First(x => x.roomID == ID));
         }
-        [HttpPost]
-        public ViewResult RoomsPrice(string id, string incoming, string outcoming, string person, string tel, string Email)
+        public ActionResult AddOrder(string id, string incoming, string outcoming, string person, string tel, string Email)
         {
             int ID = Int32.Parse(id);
             MailMessage message = new MailMessage();
@@ -77,7 +76,6 @@ namespace HomeSite.Controllers
                 }
                 catch
                 {
-
                 }
                 message.Subject = "Подтверждение бронирования";
                 message.Body = "Ваша заявка на бронирование принята. Для подтверждения и уточнения сроков мы свяжемся с вами.";
@@ -98,7 +96,7 @@ namespace HomeSite.Controllers
                                           registrate = "0" };
             db.Orders.Add(tempOrder);
             db.SaveChanges();
-            return View();
+            return PartialView();
         }
         public FileContentResult GetImage(string roomName)
         {

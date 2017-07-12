@@ -84,5 +84,49 @@ namespace HomeSite.Controllers
             weather.Weather[0].Icon = "https://openweathermap.org/img/w/" + weather.Weather[0].Icon + ".png";
             return View(weather);
         }
+        public ViewResult DatePicker()
+        {
+            ViewBag.Days = new SelectList(new[]
+            {
+                new {Id = 1, Reserv = 0 },
+                new {Id = 2, Reserv = 0 },
+                new {Id = 3, Reserv = 0 },
+                new {Id = 4, Reserv = 0 },
+                new {Id = 5, Reserv = 0 },
+                new {Id = 6, Reserv = 0 },
+                new {Id = 7, Reserv = 0 },
+                new {Id = 8, Reserv = 0 },
+                new {Id = 9, Reserv = 0 },
+                new {Id = 10, Reserv = 1 },
+                new {Id = 11, Reserv = 1 },
+                new {Id = 12, Reserv = 1 },
+                new {Id = 13, Reserv = 1 },
+                new {Id = 14, Reserv = 1 },
+                new {Id = 15, Reserv = 1 },
+                new {Id = 16, Reserv = 1 },
+                new {Id = 17, Reserv = 1 },
+                new {Id = 18, Reserv = 1 },
+                new {Id = 19, Reserv = 0 },
+                new {Id = 20, Reserv = 0 },
+                new {Id = 21, Reserv = 0 },
+                new {Id = 22, Reserv = 1 },
+                new {Id = 23, Reserv = 1 },
+                new {Id = 24, Reserv = 1 },
+                new {Id = 25, Reserv = 1 },
+                new {Id = 26, Reserv = 1 },
+                new {Id = 27, Reserv = 0 },
+                new {Id = 28, Reserv = 0 },
+                new {Id = 29, Reserv = 0 },
+                new {Id = 30, Reserv = 0 },
+                new {Id = 31, Reserv = 0 },
+            }, "Id", "Reserv");
+            return View();
+        }
+        public JsonResult Month()
+        {
+            int number = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 1, 0).Day;
+            bool[] month = new bool[number];
+            return Json(month, JsonRequestBehavior.AllowGet);
+        }
     }
 }
