@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="~/Content/datepicker.min.css" />
 <script src="@Url.Content("~/Content/Scripts/datapicker.js")"> </script>
 <script src="@Url.Content("~/Content/Scripts/buy_menu.js")"> </script>
-<script>
+<script >
     function validate_form() {
         valid = true;
 
@@ -21,8 +21,6 @@
             alert("Пожалуйста заполните поле 'Имя'");
             valid = false;
         }
-        
-
         return valid;
     }
     function OnSuccess(data) {
@@ -33,6 +31,7 @@
         alert("Что-то пошло не так")
     }
 </script>
+
 
 <div id="message">
     

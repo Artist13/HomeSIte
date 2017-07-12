@@ -1,4 +1,4 @@
-﻿function validate_form(form) {
+﻿function validate_form() {
     valid = true;
 
     if (document.getElementById("email").value == "") {
@@ -9,18 +9,14 @@
         alert("Пожалуйста заполните поле 'Имя'");
         valid = false;
     }
-    if (valid)
-    {
-        
-    }
-    
-    return false;
-}   
-function OnSuccess()
-{
-    document.getElementById('mask').style.display = "block";
+
+
+    return valid;
 }
-function OnFailure()
-{
+function OnSuccess(data) {
+    document.getElementById('mask').style.display = "block";
+    setTimeout("document.location.href='http://localhost:19070/'", 5000);
+}
+function OnFailure(request, error) {
     alert("Что-то пошло не так")
 }

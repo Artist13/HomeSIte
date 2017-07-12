@@ -34,7 +34,36 @@ namespace HomeSite.Controllers
         }
         public ViewResult DatePicker()
         {
-            return View(db.Orders);
+            return View();
+        }
+        public ActionResult GetDate(int month)
+        {
+            int[] Dates = new int[31];
+            for (int i = 0; i < 31; i++)
+            {
+                Dates[i] = 0;
+            }
+            foreach(Order or in db.Orders)
+            {
+                string[] inc = or.incoming.Split('-');
+                string[] outc = or.outcoming.Split('-');
+                if(Int32.Parse(inc[1]) == month)
+                    if(Int32.Parse(outc[1])== month)
+                    {
+                        for(int i = Int32.Parse(inc[2]); i < Int32.Parse(outc[2]); i++)
+                        {
+                            Dates[i - 1] = 1;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = Int32.Parse(inc[2]); i <= 31; i++)
+                        {
+                            Dates[i - 1] = 1;
+                        }
+                    }
+            }
+            return Json(Dates, JsonRequestBehavior.AllowGet);
         }
         public ViewResult AboutRoom(string id)
         {
@@ -98,6 +127,7 @@ namespace HomeSite.Controllers
             db.SaveChanges();
             return PartialView();
         }
+
         public FileContentResult GetImage(string roomName)
         {
             Room room = repository.Rooms.FirstOrDefault(r => r.Name == roomName);

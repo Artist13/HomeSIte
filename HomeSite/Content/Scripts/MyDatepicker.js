@@ -1,4 +1,4 @@
-﻿var DatePicker = document.getElementById('datepicker');
+﻿
 function Calendar2(id, year, month) {
     var Dlast = new Date(year, month + 1, 0).getDate(),
     D = new Date(year, month, Dlast),

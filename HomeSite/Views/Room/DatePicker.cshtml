@@ -3,12 +3,145 @@
     Layout = null;
 }
 
+<!DOCTYPE html>
 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="@Url.Content("~/Scripts/jquery-3.1.1.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")"></script>
+    <title>DatePicker</title>
+</head>
+<body>
+    <style>
+        #datepicker {
+            width: 160px;
+        }
+        #calendar2 {
+            width: 240px;
+            height: 280px;
+            font: monospace;
+            line-height: 1.2em;
+            font-size: 15px;
+            text-align: center;
+        }
+            #calendar2 thead tr:last-child {
+                font-size: small;
+                color: rgb(85, 85, 85);
+            }
+            #calendar2 thead tr:nth-child(1) td:nth-child(2) {
+                color: rgb(50, 50, 50);
+            }
+            #calendar2 thead tr:nth-child(1) td:nth-child(1):hover, #calendar2 thead tr:nth-child(1) td:nth-child(3):hover {
+                cursor: pointer;
+            }
+            #calendar2 tbody {
+                border: 2px solid rgba(35, 137, 201, 1);
+            }
+            #calendar2 tbody td {
+                color: rgb(44, 86, 122);
+            }
+                #calendar2 tbody td:nth-child(n+6), #calendar2 .holiday {
+                    color: rgb(255, 0, 0);
+                }
+                #calendar2 tbody td.today {
+                    border: 2px solid rgb(0, 0, 0);
+                }
+        .clear {
+            background: rgba(0, 255, 45, 0.41);
+            color: #fff;
+        }
+        .reserv {
+            background: rgba(255, 0, 0, 0.41);
+            color: #fff;
+        }
+    </style>
+    <div id="datepicker">
+        <table id="calendar2">
+            <thead>
+                <tr><td>‹<td colspan="5"><td>›
+                <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+            <tbody></tbody>
+        </table>
 
-<script src=@Url.Content("~/Scripts/jquery-1.12.4.js") type="text/javascript"></script>
-<script src=@Url.Content("~/Content/Scripts/datepicker.js") type="text/javascript"></script>
-    <div> 
-        <input type="text" class="datepicker-here" ></input>
+        <script>
+            var Days;
+            var month = new Date().getMonth();
+            function Calendar2(id, year, month, days) {
+                var Dlast = new Date(year, month + 1, 0).getDate(),
+                    D = new Date(year, month, Dlast),
+                    DNlast = new Date(D.getFullYear(), D.getMonth(), Dlast).getDay(),
+                    DNfirst = new Date(D.getFullYear(), D.getMonth(), 1).getDay(),
+                    calendar = '<tr>',
+                    month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+                if (DNfirst != 0) {
+                    for (var i = 1; i < DNfirst; i++) calendar += '<td>';
+                } else {
+                    for (var i = 0; i < 6; i++) calendar += '<td>';
+                }
+                for (var i = 1; i <= Dlast; i++) {
+                    if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
+                        if (days[i - 1] == '1')
+                            calendar += '<td class="today reserv">' + i;
+                        else
+                            calendar += '<td class="today clear">' + i;
+                    } else {
+                        if (days[i - 1] == '1')
+                            calendar += '<td class="reserv">' + i;
+                        else
+                            calendar += '<td class="clear">' + i;
+                    }
+                    if (new Date(D.getFullYear(), D.getMonth(), i).getDay() == 0) {
+                        calendar += '<tr>';
+                    }
+                }
+                for (var i = DNlast; i < 7; i++) calendar += '<td>&nbsp;';
+                document.querySelector('#' + id + ' tbody').innerHTML = calendar;
+                document.querySelector('#' + id + ' thead td:nth-child(2)').innerHTML = month[D.getMonth()] + ' ' + D.getFullYear();
+                document.querySelector('#' + id + ' thead td:nth-child(2)').dataset.month = D.getMonth();
+                document.querySelector('#' + id + ' thead td:nth-child(2)').dataset.year = D.getFullYear();
+                if (document.querySelectorAll('#' + id + ' tbody tr').length < 6) {  // чтобы при перелистывании месяцев не "подпрыгивала" вся страница, добавляется ряд пустых клеток. Итог: всегда 6 строк для цифр
+                    document.querySelector('#' + id + ' tbody').innerHTML += '<tr><td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;';
+                }
+            }
+            
+            $(function () {
+                $.ajax({
+                    url: "GetDate",
+                    data: 'month=' + (month + 1),
+                    success: function (data) {
+                        Days = data;
+                        Calendar2("calendar2", new Date().getFullYear(), month, Days);
+                    }
+                });
+            });
+            
+            
+            // переключатель минус месяц
+            document.querySelector('#calendar2 thead tr:nth-child(1) td:nth-child(1)').onclick = function () {
+                month = month - 1;
+                $.ajax({
+                    url: "GetDate",
+                    data: 'month=' + (month + 1),
+                    success: function (data) {
+                        Days = data;
+                        Calendar2("calendar2", new Date().getFullYear(), month, Days);
+                    }
+                });
+            }
+            // переключатель плюс месяц
+            document.querySelector('#calendar2 thead tr:nth-child(1) td:nth-child(3)').onclick = function () {
+                month = month + 1;
+                $.ajax({
+                    url: "GetDate",
+                    data: 'month=' + (month + 1),
+                    success: function (data) {
+                        Days = data;
+                        Calendar2("calendar2", new Date().getFullYear(), month, Days);
+                    }
+                });
+            }
+        </script>
     </div>
-    
-
+</body>
+</html>
