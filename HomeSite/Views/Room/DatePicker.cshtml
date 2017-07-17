@@ -15,28 +15,36 @@
 <body>
     <style>
         #datepicker {
-            width: 160px;
         }
         #calendar2 {
             width: 240px;
             height: 280px;
+            border: 3px solid rgb(25, 110, 162);
+            background: rgb(35, 137, 201);
             font: monospace;
             line-height: 1.2em;
-            font-size: 15px;
+            font-size: 20px;
             text-align: center;
+        }
+        tbody {
+            display: table-row-group;
+            border: 2px solid rgba(35, 137, 201, 1);
+            background: white;
+        }
+        thead {
+            background: rgb(35, 137, 201);
+            color: white;
+            display: table-header-group;
         }
             #calendar2 thead tr:last-child {
                 font-size: small;
-                color: rgb(85, 85, 85);
+                color: white;
             }
             #calendar2 thead tr:nth-child(1) td:nth-child(2) {
-                color: rgb(50, 50, 50);
+                color: white;
             }
             #calendar2 thead tr:nth-child(1) td:nth-child(1):hover, #calendar2 thead tr:nth-child(1) td:nth-child(3):hover {
                 cursor: pointer;
-            }
-            #calendar2 tbody {
-                border: 2px solid rgba(35, 137, 201, 1);
             }
             #calendar2 tbody td {
                 color: rgb(44, 86, 122);
@@ -48,18 +56,23 @@
                     border: 2px solid rgb(0, 0, 0);
                 }
         .clear {
-            background: rgba(0, 255, 45, 0.41);
+            background: aliceblue;
             color: #fff;
         }
+        .cell{
+        }
         .reserv {
-            background: rgba(255, 0, 0, 0.41);
+            background: rgba(0, 112, 255, 0.34);
             color: #fff;
+        }
+        .reservNow {
+            background: rgba(0, 255, 57, 0.78);
         }
     </style>
     <div id="datepicker">
         <table id="calendar2">
             <thead>
-                <tr><td>‹<td colspan="5"><td>›
+                <tr><td id="left_arrow">‹<td colspan="5"><td id="right_arrow">›
                 <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
             <tbody></tbody>
         </table>
@@ -82,14 +95,14 @@
                 for (var i = 1; i <= Dlast; i++) {
                     if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
                         if (days[i - 1] == '1')
-                            calendar += '<td class="today reserv">' + i;
+                            calendar += '<td class=" cell today reserv">' + i;
                         else
-                            calendar += '<td class="today clear">' + i;
+                            calendar += '<td class="cell today clear">' + i;
                     } else {
                         if (days[i - 1] == '1')
-                            calendar += '<td class="reserv">' + i;
+                            calendar += '<td class="cell reserv">' + i;
                         else
-                            calendar += '<td class="clear">' + i;
+                            calendar += '<td class="cell clear">' + i;
                     }
                     if (new Date(D.getFullYear(), D.getMonth(), i).getDay() == 0) {
                         calendar += '<tr>';
@@ -105,7 +118,8 @@
                 }
             }
             
-            $(function () {
+
+            function UpdateDays() {
                 $.ajax({
                     url: "GetDate",
                     data: 'month=' + (month + 1),
@@ -114,33 +128,29 @@
                         Calendar2("calendar2", new Date().getFullYear(), month, Days);
                     }
                 });
-            });
-            
+            }
+            document.onload = UpdateDays();
             
             // переключатель минус месяц
-            document.querySelector('#calendar2 thead tr:nth-child(1) td:nth-child(1)').onclick = function () {
+            document.getElementById('left_arrow').onclick = function () {
                 month = month - 1;
-                $.ajax({
-                    url: "GetDate",
-                    data: 'month=' + (month + 1),
-                    success: function (data) {
-                        Days = data;
-                        Calendar2("calendar2", new Date().getFullYear(), month, Days);
-                    }
-                });
+                UpdateDays();
             }
             // переключатель плюс месяц
-            document.querySelector('#calendar2 thead tr:nth-child(1) td:nth-child(3)').onclick = function () {
+            document.getElementById('right_arrow').onclick = function () {
                 month = month + 1;
-                $.ajax({
-                    url: "GetDate",
-                    data: 'month=' + (month + 1),
-                    success: function (data) {
-                        Days = data;
-                        Calendar2("calendar2", new Date().getFullYear(), month, Days);
-                    }
-                });
+                UpdateDays();
             }
+            var cl = 0;
+            var start;
+            var finish;
+            //Подсвечивание при нажатии
+            $("table").click(function (e) {
+                $(this).find(start).removeClass("reservNow");
+                start = e.target;
+                var elem = $(this).find(e.target).addClass("reservNow");
+            });
+           
         </script>
     </div>
 </body>

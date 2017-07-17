@@ -47,21 +47,40 @@ namespace HomeSite.Controllers
             {
                 string[] inc = or.incoming.Split('-');
                 string[] outc = or.outcoming.Split('-');
-                if(Int32.Parse(inc[1]) == month)
-                    if(Int32.Parse(outc[1])== month)
+                int incD = Int32.Parse(inc[2]);
+                int incM = Int32.Parse(inc[1]);
+                int incY = Int32.Parse(inc[0]);
+                int outcD = Int32.Parse(outc[2]);
+                int outcM = Int32.Parse(outc[1]);
+                int outcY = Int32.Parse(outc[0]);
+                if ((incM < month) && (outcM == month))
+                {
+                    for (int i = 1; i < outcD; i++)
                     {
-                        for(int i = Int32.Parse(inc[2]); i < Int32.Parse(outc[2]); i++)
-                        {
-                            Dates[i - 1] = 1;
-                        }
+                        Dates[i - 1] = 1;
                     }
-                    else
+                }
+                else if((incM == month) && (outcM == month))
+                {
+                    for (int i = incD; i < outcD; i++)
                     {
-                        for (int i = Int32.Parse(inc[2]); i <= 31; i++)
-                        {
-                            Dates[i - 1] = 1;
-                        }
+                        Dates[i - 1] = 1;
                     }
+                }
+                else if((incM == month) && (outcM > month))
+                {
+                    for (int i = incD; i < 31; i++)
+                    {
+                        Dates[i - 1] = 1;
+                    }
+                }
+                else if((incM < month) && (outcM > month))
+                {
+                    for (int i = 1; i < 31; i++)
+                    {
+                        Dates[i - 1] = 1;
+                    }
+                }
             }
             return Json(Dates, JsonRequestBehavior.AllowGet);
         }
