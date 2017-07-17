@@ -16,7 +16,7 @@
     <style>
         #datepicker {
         }
-        #calendar2 {
+        #calendar1 {
             width: 240px;
             height: 280px;
             border: 3px solid rgb(25, 110, 162);
@@ -25,6 +25,7 @@
             line-height: 1.2em;
             font-size: 20px;
             text-align: center;
+            visibility:hidden;
         }
         tbody {
             display: table-row-group;
@@ -36,23 +37,23 @@
             color: white;
             display: table-header-group;
         }
-            #calendar2 thead tr:last-child {
+            #calendar1 thead tr:last-child {
                 font-size: small;
                 color: white;
             }
-            #calendar2 thead tr:nth-child(1) td:nth-child(2) {
+            #calendar1 thead tr:nth-child(1) td:nth-child(2) {
                 color: white;
             }
-            #calendar2 thead tr:nth-child(1) td:nth-child(1):hover, #calendar2 thead tr:nth-child(1) td:nth-child(3):hover {
+            #calendar1 thead tr:nth-child(1) td:nth-child(1):hover, #calendar1 thead tr:nth-child(1) td:nth-child(3):hover {
                 cursor: pointer;
             }
-            #calendar2 tbody td {
+            #calendar1 tbody td {
                 color: rgb(44, 86, 122);
             }
-                #calendar2 tbody td:nth-child(n+6), #calendar2 .holiday {
+                #calendar1 tbody td:nth-child(n+6), #calendar1 .holiday {
                     color: rgb(255, 0, 0);
                 }
-                #calendar2 tbody td.today {
+                #calendar1 tbody td.today {
                     border: 2px solid rgb(0, 0, 0);
                 }
         .clear {
@@ -69,8 +70,11 @@
             background: rgba(0, 255, 57, 0.78);
         }
     </style>
-    <div id="datepicker">
-        <table id="calendar2">
+    <form>
+        <input id="datepicker_input" type="date" />
+        <input id="datepicker_output" type="date" />
+    </form>
+        <table id="calendar1">
             <thead>
                 <tr><td id="left_arrow">‹<td colspan="5"><td id="right_arrow">›
                 <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
@@ -80,7 +84,8 @@
         <script>
             var Days;
             var month = new Date().getMonth();
-            function Calendar2(id, year, month, days) {
+            var year = new Date().getFullYear();
+            function calendar1(id, year, month, days) {
                 var Dlast = new Date(year, month + 1, 0).getDate(),
                     D = new Date(year, month, Dlast),
                     DNlast = new Date(D.getFullYear(), D.getMonth(), Dlast).getDay(),
@@ -125,23 +130,23 @@
                     data: 'month=' + (month + 1),
                     success: function (data) {
                         Days = data;
-                        Calendar2("calendar2", new Date().getFullYear(), month, Days);
+                        calendar1("calendar1", new Date().getFullYear(), month, Days);
                     }
                 });
             }
             document.onload = UpdateDays();
             
             // переключатель минус месяц
-            document.getElementById('left_arrow').onclick = function () {
+            $("#left_arrow").click(function () {
                 month = month - 1;
                 UpdateDays();
-            }
+            })
+            
             // переключатель плюс месяц
-            document.getElementById('right_arrow').onclick = function () {
+            $("right_arrow").click(function () {
                 month = month + 1;
                 UpdateDays();
-            }
-            var cl = 0;
+            })
             var start;
             var finish;
             //Подсвечивание при нажатии
@@ -149,9 +154,23 @@
                 $(this).find(start).removeClass("reservNow");
                 start = e.target;
                 var elem = $(this).find(e.target).addClass("reservNow");
+                setTimeout(function () {
+                    $("#calendar1").css({ "visibility": "hidden" });
+                }, 200);
+                if (start.innerHTML.length < 2)
+                    var day = "0" + start.innerHTML;
+                else
+                    var day = start.innerHTML;
+                if (month.toString().length < 2)
+                    var Month = "0" + month;
+                else
+                    var Month = month;
+                $("#datepicker_input").val(year + "-" + Month + "-" + day);
             });
-           
+            $("#datepicker_input").click(function (e) {
+                e.preventDefault();
+                $("#calendar1").css({ "position": "relative", "top": "-" + $("#datepicker_input").outerHeight() + "px", "visibility": "visible" });
+            })
         </script>
-    </div>
 </body>
 </html>
