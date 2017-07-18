@@ -17,11 +17,10 @@
         #datepicker {
         }
         #calendar1 {
-            width: 240px;
+            width: 250px;
             height: 280px;
             border: 3px solid rgb(25, 110, 162);
             background: rgb(35, 137, 201);
-            font: monospace;
             line-height: 1.2em;
             font-size: 20px;
             text-align: center;
@@ -69,17 +68,80 @@
         .reservNow {
             background: rgba(0, 255, 57, 0.78);
         }
+
+        #buy {
+            display: inline-block;
+            width: 250px;
+            position: absolute;
+            margin: 0px 25px;
+            top: 51px;
+            border: 2px solid;
+            border-color: #d6d4d4;
+            border-radius: 15px;
+            padding: 10px;
+        }
+        #buy form {
+            margin-top: 20px
+        }
+        #buy input {
+            width: 241px;
+            max-width: 250px;
+            padding-left: 5px;
+        }
+        #buy span {
+            font-size: 14px;
+            font-family: sans-serif;
+            margin-left: 20px;
+        }
+        #buy .number_cost {
+            font-size: 30px;
+            font-family: cursive;
+        }
+        #buy form span {
+            color: rgb(35, 137, 201);
+            font-size: 15px;
+            margin: 0px;
+            display: block;
+        }
+        #buy #push {
+            font: italic normal normal 16px/1.4em 'times new roman',times,serif;
+            width: 250px;
+            height: 30px;
+            text-align: center;
+            margin-top: 20px;
+            background-color: #8ec4e7;
+            color: white;
+            border: 2px solid rgba(35, 137, 201, 1);
+        }
     </style>
-    <form>
-        <input id="datepicker_input" type="date" />
-        <input id="datepicker_output" type="date" />
-    </form>
-        <table id="calendar1">
-            <thead>
-                <tr><td id="left_arrow">‹<td colspan="5"><td id="right_arrow">›
-                <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-            <tbody></tbody>
-        </table>
+    <div id="buy">
+        <span>от</span>
+        <br />
+        <span class="number_cost">1000 руб</span>
+        <br />
+        <span>за ночь</span>
+        @using (Ajax.BeginForm("AddOrder", "Room", new AjaxOptions { UpdateTargetId = "message", InsertionMode = InsertionMode.Replace, OnBegin = "validate_form", OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+        {
+
+            <input type="text" name="id" hidden="hidden" value="1" />
+                            <span>Заезд</span>
+                            <input id="datepicker_input" type="date" name="incoming" max="2017-08-31" min="2017-06-01" placeholder="Заезд" />
+                            <span>Выезд</span>
+                            <input id="datepicker_output" type="date" name="outcoming" max="2017-08-31" min="2017-06-01" placeholder="Выезд" />
+                            @Html.TextBox("person", null, new { @placeholder = "Иванов Иван" })
+                            @Html.TextBox("tel", null, new { @placeholder = "+7(123)-456-78-90" })
+                            @Html.TextBox("email", null, new { @placeholder = "ivanov@mail.ru" })
+                            <input type="submit" id="push" value="Забронировать" />
+        }
+        
+    </div>
+    <table id="calendar1">
+        <thead>
+            <tr><td id="left_arrow">‹<td colspan="5"><td id="right_arrow">›
+            <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+        <tbody></tbody>
+    </table>
+        
 
         <script>
             var Days;
@@ -143,34 +205,67 @@
             })
             
             // переключатель плюс месяц
-            $("right_arrow").click(function () {
+            $("#right_arrow").click(function () {
                 month = month + 1;
                 UpdateDays();
             })
             var start;
             var finish;
+            var cl = 0;
             //Подсвечивание при нажатии
             $("table").click(function (e) {
-                $(this).find(start).removeClass("reservNow");
-                start = e.target;
-                var elem = $(this).find(e.target).addClass("reservNow");
-                setTimeout(function () {
-                    $("#calendar1").css({ "visibility": "hidden" });
-                }, 200);
-                if (start.innerHTML.length < 2)
-                    var day = "0" + start.innerHTML;
-                else
-                    var day = start.innerHTML;
-                if (month.toString().length < 2)
-                    var Month = "0" + month;
-                else
-                    var Month = month;
-                $("#datepicker_input").val(year + "-" + Month + "-" + day);
+                if ($(this).find(e.target).hasClass("cell"))
+                {
+                    switch (cl) {
+                        case 0:
+                            $(this).find(start).removeClass("reservNow");
+                            start = e.target;
+                            var elem = $(this).find(e.target).addClass("reservNow");
+                            setTimeout(function () {
+                                $("#calendar1").css({ "visibility": "hidden" });
+                            }, 200);
+                            if (start.innerHTML.length < 2)
+                                var day = "0" + start.innerHTML;
+                            else
+                                var day = start.innerHTML;
+                            if (month.toString().length < 2)
+                                var Month = "0" + (month + 1);
+                            else
+                                var Month = month + 1;
+                            $("#datepicker_input").val(year + "-" + Month + "-" + day);
+                            break;
+                        case 1:
+                            $(this).find(finish).removeClass("reservNow");
+                            finish = e.target;
+                            var elem = $(this).find(e.target).addClass("reservNow");
+                            setTimeout(function () {
+                                $("#calendar1").css({ "visibility": "hidden" });
+                            }, 200);
+                            if (finish.innerHTML.length < 2)
+                                var day = "0" + finish.innerHTML;
+                            else
+                                var day = finish.innerHTML;
+                            if (month.toString().length < 2)
+                                var Month = "0" + (month + 1);
+                            else
+                                var Month = month + 1;
+                            $("#datepicker_output").val(year + "-" + Month + "-" + day);
+                            break;
+                    }
+                }
             });
             $("#datepicker_input").click(function (e) {
+                cl = 0;
+                $("#calendar1").offset({ top: $("#datepicker_input").offset().top, left: $("#datepicker_input").offset().left });
                 e.preventDefault();
-                $("#calendar1").css({ "position": "relative", "top": "-" + $("#datepicker_input").outerHeight() + "px", "visibility": "visible" });
-            })
+                $("#calendar1").css({ "visibility": "visible" });
+            });
+            $("#datepicker_output").click(function (e) {
+                cl = 1;
+                $("#calendar1").offset({ top: $("#datepicker_output").offset().top, left: $("#datepicker_output").offset().left });
+                e.preventDefault();
+                $("#calendar1").css({ "visibility": "visible" });
+            });
         </script>
 </body>
 </html>
