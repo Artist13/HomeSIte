@@ -193,6 +193,7 @@
                     success: function (data) {
                         Days = data;
                         calendar1("calendar1", new Date().getFullYear(), month, Days);
+                        calend();
                     }
                 });
             }
@@ -200,8 +201,11 @@
             
             // переключатель минус месяц
             $("#left_arrow").click(function () {
-                month = month - 1;
-                UpdateDays();
+                if ((month > new Date().getMonth()))
+                {
+                    month = month - 1;
+                    UpdateDays();
+                }
             })
             
             // переключатель плюс месяц
@@ -209,17 +213,33 @@
                 month = month + 1;
                 UpdateDays();
             })
-            var start;
-            var finish;
-            var cl = 0;
+            var start;//День приезда
+            var start_day;
+            var start_month
+            var finish;//День отъезда
+            var finish_day;
+            var finish_month;
+            var cl = 0;//Какая из строк активна
             //Подсвечивание при нажатии
             $("table").click(function (e) {
                 if ($(this).find(e.target).hasClass("cell"))
                 {
                     switch (cl) {
                         case 0:
+                            if (typeof (finish) != "undefined")
+                            {
+                                //очистка всех элементов кроме конечного
+                                $.each($("#calendar1 tr td.cell"), function (index, value) {
+                                    if (index != $("#calendar1 tr td.cell").index(finish)) {
+                                        $(this).removeClass("reservNow");
+                                    };
+                                });
+                                //----------------------------------------
+                            };
                             $(this).find(start).removeClass("reservNow");
                             start = e.target;
+                            start_day = start.innerHTML;
+                            start_month = month;
                             var elem = $(this).find(e.target).addClass("reservNow");
                             setTimeout(function () {
                                 $("#calendar1").css({ "visibility": "hidden" });
@@ -233,10 +253,32 @@
                             else
                                 var Month = month + 1;
                             $("#datepicker_input").val(year + "-" + Month + "-" + day);
+                            if (typeof (finish) != "undefined") {
+                                //Окрашивание элементов между начальным и конечным
+                                calend();
+                                //$.each($("#calendar1 tr td.cell"), function (index, value) {
+                                //    if ((index > $("#calendar1 tr td.cell").index(start)) && (index < $("#calendar1 tr td.cell").index(finish))) {
+                                //        $(this).addClass("reservNow");
+                                //    }
+                                //});
+                                //---------------------------------------------------
+                            };
+                            
                             break;
                         case 1:
+                            if (typeof (start) != "undefined") {
+                                //очистка всех элементов кроме начального
+                                $.each($("#calendar1 tr td.cell"), function (index, value) {
+                                    if (index != $("#calendar1 tr td.cell").index(start)) {
+                                        $(this).removeClass("reservNow");
+                                    };
+                                });
+                                //----------------------------------------
+                            };
                             $(this).find(finish).removeClass("reservNow");
                             finish = e.target;
+                            finish_day = finish.innerHTML;
+                            finish_month = month;
                             var elem = $(this).find(e.target).addClass("reservNow");
                             setTimeout(function () {
                                 $("#calendar1").css({ "visibility": "hidden" });
@@ -250,16 +292,58 @@
                             else
                                 var Month = month + 1;
                             $("#datepicker_output").val(year + "-" + Month + "-" + day);
+                            if (typeof (start) != "undefined") {
+                                //Окрашивание элементов между начальным и конечным
+                                calend();
+                                //$.each($("#calendar1 tr td.cell"), function (index, value) {
+                                //    if ((index > $("#calendar1 tr td.cell").index(start)) && (index < $("#calendar1 tr td.cell").index(finish))) {
+                                //        $(this).addClass("reservNow");
+                                //    }
+                                //});
+                                //---------------------------------------------------
+                            };
                             break;
                     }
                 }
             });
+            function calend() {
+                var init;
+                var last;
+                if ((typeof (start) != "undefined") && (typeof (finish) != "undefined"))
+                {
+                    if (start_month == month) {
+                        init = start_day;
+                    }
+                    else {
+                        if (start_month < month)
+                        {
+                            init = 0;
+                        }
+                    }
+                    if (finish_month == month) {
+                        last = finish_day;
+                    }
+                    else {
+                        if (finish_month > month)
+                        {
+                            last = $("#calendar1 tr td.cell").length;
+                        }
+                    }
+                    $.each($("#calendar1 tr td.cell"), function (index, value) {
+                        if ((index >= init) && (index < last)) {
+                            $(this).addClass("reservNow");
+                        }
+                    });
+                }
+            };
+            //Появление календаря при нажатии на строку приезда
             $("#datepicker_input").click(function (e) {
                 cl = 0;
                 $("#calendar1").offset({ top: $("#datepicker_input").offset().top, left: $("#datepicker_input").offset().left });
                 e.preventDefault();
                 $("#calendar1").css({ "visibility": "visible" });
             });
+            //Появления календаря при нажатии на строку отъезда
             $("#datepicker_output").click(function (e) {
                 cl = 1;
                 $("#calendar1").offset({ top: $("#datepicker_output").offset().top, left: $("#datepicker_output").offset().left });
