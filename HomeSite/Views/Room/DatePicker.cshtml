@@ -55,19 +55,24 @@
                 #calendar1 tbody td.today {
                     border: 2px solid rgb(0, 0, 0);
                 }
+                #calendar1 tbody td.befortoday{
+                    background: rgba(0,0,0,0.25);
+                }
         .clear {
             background: aliceblue;
             color: #fff;
         }
         .cell{
+            cursor: default;
+        }
+        .reservNow {
+            background: rgba(0, 255, 57, 0.78);
         }
         .reserv {
             background: rgba(0, 112, 255, 0.34);
             color: #fff;
         }
-        .reservNow {
-            background: rgba(0, 255, 57, 0.78);
-        }
+        
 
         #buy {
             display: inline-block;
@@ -153,23 +158,48 @@
                     DNlast = new Date(D.getFullYear(), D.getMonth(), Dlast).getDay(),
                     DNfirst = new Date(D.getFullYear(), D.getMonth(), 1).getDay(),
                     calendar = '<tr>',
-                    month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+                    Month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
                 if (DNfirst != 0) {
                     for (var i = 1; i < DNfirst; i++) calendar += '<td>';
                 } else {
                     for (var i = 0; i < 6; i++) calendar += '<td>';
                 }
+                var istoday = 0;
+                if (month > new Date().getMonth())
+                    istoday = 1;
                 for (var i = 1; i <= Dlast; i++) {
                     if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
                         if (days[i - 1] == '1')
+                        {
+                            istoday = 1;
                             calendar += '<td class=" cell today reserv">' + i;
+                        }
                         else
+                        {
+                            istoday = 1;
                             calendar += '<td class="cell today clear">' + i;
+                        }
                     } else {
                         if (days[i - 1] == '1')
-                            calendar += '<td class="cell reserv">' + i;
+                            switch (istoday) {
+                                case 0:
+                                    calendar += '<td class="befortoday cell reserv">' + i;
+                                    break;
+                                case 1:
+                                    calendar += '<td class="cell reserv">' + i;
+                                    break;
+                            }
                         else
-                            calendar += '<td class="cell clear">' + i;
+                            switch (istoday)
+                            {
+                                case 0:
+                                    calendar += '<td class="befortoday cell clear">' + i;
+                                    break;
+                                case 1:
+                                    calendar += '<td class="cell clear">' + i;
+                                    break;
+                            }
+                            
                     }
                     if (new Date(D.getFullYear(), D.getMonth(), i).getDay() == 0) {
                         calendar += '<tr>';
@@ -177,8 +207,8 @@
                 }
                 for (var i = DNlast; i < 7; i++) calendar += '<td>&nbsp;';
                 document.querySelector('#' + id + ' tbody').innerHTML = calendar;
-                document.querySelector('#' + id + ' thead td:nth-child(2)').innerHTML = month[D.getMonth()] + ' ' + D.getFullYear();
-                document.querySelector('#' + id + ' thead td:nth-child(2)').dataset.month = D.getMonth();
+                document.querySelector('#' + id + ' thead td:nth-child(2)').innerHTML = Month[D.getMonth()] + ' ' + D.getFullYear();
+                document.querySelector('#' + id + ' thead td:nth-child(2)').dataset.Month = D.getMonth();
                 document.querySelector('#' + id + ' thead td:nth-child(2)').dataset.year = D.getFullYear();
                 if (document.querySelectorAll('#' + id + ' tbody tr').length < 6) {  // чтобы при перелистывании месяцев не "подпрыгивала" вся страница, добавляется ряд пустых клеток. Итог: всегда 6 строк для цифр
                     document.querySelector('#' + id + ' tbody').innerHTML += '<tr><td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;';
@@ -186,7 +216,7 @@
             }
             
 
-            function UpdateDays() {
+            function UpdateDays(month) {
                 $.ajax({
                     url: "GetDate",
                     data: 'month=' + (month + 1),
@@ -197,21 +227,21 @@
                     }
                 });
             }
-            document.onload = UpdateDays();
+            document.onload = UpdateDays(new Date().getMonth());
             
             // переключатель минус месяц
             $("#left_arrow").click(function () {
                 if ((month > new Date().getMonth()))
                 {
                     month = month - 1;
-                    UpdateDays();
+                    UpdateDays(month);
                 }
             })
             
             // переключатель плюс месяц
             $("#right_arrow").click(function () {
                 month = month + 1;
-                UpdateDays();
+                UpdateDays(month);
             })
             var start;//День приезда
             var start_day;
@@ -222,7 +252,7 @@
             var cl = 0;//Какая из строк активна
             //Подсвечивание при нажатии
             $("table").click(function (e) {
-                if ($(this).find(e.target).hasClass("cell"))
+                if ($(this).find(e.target).hasClass("cell") && !($(e.target).hasClass("befortoday")) && !($(e.target).hasClass("reserv")))
                 {
                     switch (cl) {
                         case 0:
@@ -244,26 +274,11 @@
                             setTimeout(function () {
                                 $("#calendar1").css({ "visibility": "hidden" });
                             }, 200);
-                            if (start.innerHTML.length < 2)
-                                var day = "0" + start.innerHTML;
-                            else
-                                var day = start.innerHTML;
-                            if (month.toString().length < 2)
-                                var Month = "0" + (month + 1);
-                            else
-                                var Month = month + 1;
-                            $("#datepicker_input").val(year + "-" + Month + "-" + day);
-                            if (typeof (finish) != "undefined") {
-                                //Окрашивание элементов между начальным и конечным
-                                calend();
-                                //$.each($("#calendar1 tr td.cell"), function (index, value) {
-                                //    if ((index > $("#calendar1 tr td.cell").index(start)) && (index < $("#calendar1 tr td.cell").index(finish))) {
-                                //        $(this).addClass("reservNow");
-                                //    }
-                                //});
-                                //---------------------------------------------------
-                            };
                             
+                            if (typeof (finish) != "undefined") {
+                                calend();
+                            };
+                            RefreshDate();
                             break;
                         case 1:
                             if (typeof (start) != "undefined") {
@@ -283,70 +298,104 @@
                             setTimeout(function () {
                                 $("#calendar1").css({ "visibility": "hidden" });
                             }, 200);
-                            if (finish.innerHTML.length < 2)
-                                var day = "0" + finish.innerHTML;
-                            else
-                                var day = finish.innerHTML;
-                            if (month.toString().length < 2)
-                                var Month = "0" + (month + 1);
-                            else
-                                var Month = month + 1;
-                            $("#datepicker_output").val(year + "-" + Month + "-" + day);
+                            
                             if (typeof (start) != "undefined") {
-                                //Окрашивание элементов между начальным и конечным
                                 calend();
-                                //$.each($("#calendar1 tr td.cell"), function (index, value) {
-                                //    if ((index > $("#calendar1 tr td.cell").index(start)) && (index < $("#calendar1 tr td.cell").index(finish))) {
-                                //        $(this).addClass("reservNow");
-                                //    }
-                                //});
-                                //---------------------------------------------------
                             };
+                            RefreshDate();
                             break;
                     }
                 }
             });
+            function RefreshDate()
+            {
+                if (start == undefined)
+                {
+                    $("#datepicker_input").val("");
+                }
+                else {
+                    if (start.innerHTML.length < 2)
+                        var day = "0" + start.innerHTML;
+                    else
+                        var day = start.innerHTML;
+                    if (month.toString().length < 2)
+                        var Month = "0" + (month + 1);
+                    else
+                        var Month = month + 1;
+                    $("#datepicker_input").val(year + "-" + Month + "-" + day);
+                }
+                if (finish == undefined)
+                {
+                    $("#datepicker_output").val("");
+                }
+                else{
+                    if (finish.innerHTML.length < 2)
+                        var day = "0" + finish.innerHTML;
+                    else
+                        var day = finish.innerHTML;
+                    if (month.toString().length < 2)
+                        var Month = "0" + (month + 1);
+                    else
+                        var Month = month + 1;
+                    $("#datepicker_output").val(year + "-" + Month + "-" + day);
+                }
+            }
             function calend() {
                 var init;
                 var last;
                 if ((typeof (start) != "undefined") && (typeof (finish) != "undefined"))
                 {
-                    if (start_month == month) {
-                        init = start_day;
+                    if ((start_month - 0 > finish_month - 0) || ((start_month = finish_month) && (start_day - 0 > finish_day - 0)))
+                    {
+                        $(finish).removeClass("reservNow");
+                        finish_day = undefined;
+                        finish_month = undefined;
+                        finish = undefined;
                     }
-                    else {
-                        if (start_month < month)
-                        {
-                            init = 0;
+                    else
+                    {
+                        if (start_month == month) {
+                            init = start_day;
                         }
-                    }
-                    if (finish_month == month) {
-                        last = finish_day;
-                    }
-                    else {
-                        if (finish_month > month)
-                        {
-                            last = $("#calendar1 tr td.cell").length;
+                        else {
+                            if (start_month < month) {
+                                init = 0;
+                            }
                         }
-                    }
-                    $.each($("#calendar1 tr td.cell"), function (index, value) {
-                        if ((index >= init) && (index < last)) {
-                            $(this).addClass("reservNow");
+                        if (finish_month == month) {
+                            last = finish_day;
                         }
-                    });
+                        else {
+                            if (finish_month > month) {
+                                last = $("#calendar1 tr td.cell").length;
+                            }
+                        }
+                        $.each($("#calendar1 tr td.cell"), function (index, value) {
+                            if ((index >= init) && (index < last)) {
+                                if ($(this).hasClass("reserv")) {
+                                    last = $("#calendar1 tr td.cell").index(this) - 1;
+                                    $(finish).removeClass("reservNow");
+                                    finish = $("#calendar1 tr td.cell")[last];
+                                    finish_day = finish.innerHTML;
+                                    finish_month = month;
+                                }
+                                $(this).addClass("reservNow");
+                            }
+                        });
+                    }
                 }
             };
             //Появление календаря при нажатии на строку приезда
             $("#datepicker_input").click(function (e) {
                 cl = 0;
-                $("#calendar1").offset({ top: $("#datepicker_input").offset().top, left: $("#datepicker_input").offset().left });
+                $("#calendar1").offset({ top: $("#datepicker_input").offset().top + $("#datepicker_input").outerHeight(), left: $("#datepicker_input").offset().left });
                 e.preventDefault();
                 $("#calendar1").css({ "visibility": "visible" });
             });
             //Появления календаря при нажатии на строку отъезда
             $("#datepicker_output").click(function (e) {
                 cl = 1;
-                $("#calendar1").offset({ top: $("#datepicker_output").offset().top, left: $("#datepicker_output").offset().left });
+                $("#calendar1").offset({ top: $("#datepicker_output").offset().top + $("#datepicker_output").outerHeight(), left: $("#datepicker_output").offset().left });
                 e.preventDefault();
                 $("#calendar1").css({ "visibility": "visible" });
             });
