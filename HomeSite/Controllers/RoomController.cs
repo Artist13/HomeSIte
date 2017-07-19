@@ -38,8 +38,8 @@ namespace HomeSite.Controllers
         }
         public ActionResult GetDate(int month)
         {
-            int[] Dates = new int[31];
-            for (int i = 0; i < 31; i++)
+            int[] Dates = new int[DateTime.DaysInMonth(DateTime.Now.Year, month+1)];
+            for (int i = 0; i < Dates.Length; i++)
             {
                 Dates[i] = 0;
             }
@@ -69,14 +69,14 @@ namespace HomeSite.Controllers
                 }
                 else if((incM == month) && (outcM > month))
                 {
-                    for (int i = incD; i < 31; i++)
+                    for (int i = incD; i <= Dates.Length; i++)
                     {
                         Dates[i - 1] = 1;
                     }
                 }
                 else if((incM < month) && (outcM > month))
                 {
-                    for (int i = 1; i < 31; i++)
+                    for (int i = 1; i <= Dates.Length; i++)
                     {
                         Dates[i - 1] = 1;
                     }
