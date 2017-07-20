@@ -43,7 +43,7 @@ namespace HomeSite.Controllers
             {
                 Dates[i] = 0;
             }
-            foreach(Order or in db.Orders)
+            foreach(Order or in db.Orders.Where(x => x.registrate == "Потвержден"))
             {
                 string[] inc = or.incoming.Split('-');
                 string[] outc = or.outcoming.Split('-');
@@ -99,13 +99,14 @@ namespace HomeSite.Controllers
             message.Body = person + '\n' + Email + '\n' + tel + '\n' + db.Rooms.First(x => x.roomID == ID).Name + '\n' + "Заезд: " + incoming + "Выезд: " + outcoming + '\n' + "Дата подачи: " + DateTime.Now.ToString();
             SmtpClient client = new SmtpClient("mail.sovetov9.ru")
             {
-                EnableSsl = true,
+                EnableSsl = false,
                 Port = 587,
 
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential("Registrator@sovetov9.ru", "4arpZ0M!")
             };
+           
        
             try
             {
@@ -117,7 +118,7 @@ namespace HomeSite.Controllers
             if (Email != null)
             {
                 message = new MailMessage();
-                message.From = new MailAddress("nikita-podhvatoff@yandex.ru");
+                message.From = new MailAddress("Registrator@sovetov9.ru");
                 try
                 {
                     message.To.Add(new MailAddress(Email));

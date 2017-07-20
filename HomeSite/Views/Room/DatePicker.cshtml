@@ -217,7 +217,8 @@
                 }
             }
             
-
+            //Обновление данных календаря
+            //Доработать: запрашивать данные на каждый месяц только один раз
             function UpdateDays(month) {
                 $.ajax({
                     url: "GetDate",
@@ -229,6 +230,7 @@
                     }
                 });
             }
+            //обновление отображения доступности переключателя
             function UpdateArrows() {
                 if ((month == 5) || (month == new Date().getMonth())) {
                     $("#left_arrow").addClass("unready");
@@ -244,6 +246,7 @@
                     $("#right_arrow").removeClass("unready");
                 }
             }
+            //функция выполняющаяся при загрузке страницы
             $(document).ready(function () {
                 UpdateDays(new Date().getMonth());
                 UpdateArrows();
@@ -254,7 +257,8 @@
                 if ((month > new Date().getMonth()) && (month > 5))
                 {
                     month = month - 1;
-                    UpdateDays(month);   
+                    if(Days[month] != undefined)
+                        UpdateDays(month);   
                 }
                 UpdateArrows();
             })
@@ -264,7 +268,8 @@
                 if (month < 8)
                 {
                     month = month + 1;
-                    UpdateDays(month);
+                    if(Days[month] != undefined)
+                        UpdateDays(month);
                 }
                 UpdateArrows();
             })
@@ -332,6 +337,7 @@
                     }
                 }
             });
+            //Обновление данных в полях ввода
             function RefreshDate()
             {
                 if (start == undefined)
@@ -365,9 +371,11 @@
                     $("#datepicker_output").val(year + "-" + Month + "-" + day);
                 }
             }
+            //Отрисовка выбранных дней 
             function calend() {
                 if ((start != undefined) && (finish != undefined))
                 {
+                    //Проверка правильности порядка
                     if ((start_month - 0 > finish_month - 0) || ((start_month == finish_month) && (start_day - 0 > finish_day - 0)))
                     {
                         $(finish).removeClass("reservNow");
@@ -377,6 +385,7 @@
                     }
                     else
                     {
+                        //Проход по всем месяцам от начального до конечного
                         for (var temp_month = start_month; temp_month <= finish_month; temp_month++)
                         {
                             if (temp_month == start_month)
