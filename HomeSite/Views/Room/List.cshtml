@@ -10,12 +10,9 @@
         {
             <div class="room">
                 <div class="container_image">
-                    
-					@using (Html.BeginForm("AboutRoom", "Room", FormMethod.Post))
-                    {
-                        <input type="text" name="id" value=@p.roomID style="visibility: hidden; height:0px;" />
-                        <input type="image" src=~/Content/Media/Rooms/@p.nameImage.Split(',')[0] name="aboutroom" value="О номере" />
-                    }
+                    <a href=@Url.Action("AboutRoom", new { id = p.roomID })>
+                        <img src="~/Content/Media/Rooms/@p.nameImage.Split(',')[0]" />
+                    </a>
                 </div>
                 <div class="container_name">
                     <span>@p.Name</span>
@@ -51,13 +48,12 @@
                     <br />
                     <span class="number_cost">@p.Cost руб</span>
                 </div>
-                <div class="about_room">
-                    @using (Html.BeginForm("AboutRoom", "Room", FormMethod.Post))
-                    {
-                        <input type="text" name="id" value=@p.roomID style="visibility: hidden; height:0px;" />
-                        <input type="submit" name="aboutroom" value="О номере" />
-                    }
-                </div>
+                    <a href=@Url.Action("AboutRoom", new { id = p.roomID })>
+                        <div class="about_room">
+                            <span>О номере</span>
+                        </div>
+                    </a>
+                
             </div>
         }
     </div>

@@ -48,7 +48,7 @@
 .container_image:hover{
     box-shadow: 0px 0px 10px 2px darkslategrey;
 }
-.container_image input{
+.container_image img{
 	border: 0px;
     height:175px;
 	width:303px;
@@ -113,20 +113,29 @@
 .number_cost{
     font-size:20px;
 }
-.about_room input{
-    width:100px;
-    position:relative;
-    top:145px;
-    left:672px;
+a{
+    text-decoration:none;
 }
-.about_room input:hover{
-    width:100px;
-    position:relative;
-    top:145px;
-    left:672px;
+a:hover{
+    text-decoration: none;
+}
+.about_room {
+    text-align: center;
+    height: 15px;
+    padding: 3px 10px 10px 9px;
+    width: 70px;
+    position: relative;
+    top: 145px;
+    left: 800px;
+    border: rgba(35, 137, 201, 1) 2px solid;
+    color: #7fb0d0;
+    font: italic normal normal 16px/1.4em 'times new roman',times,serif;
+    background: white;
+}
+
+.about_room:hover{
 	color: white;
     background-color: rgb(35, 137, 201);
-    border: 1px #8ec4e7;
 }
 
 

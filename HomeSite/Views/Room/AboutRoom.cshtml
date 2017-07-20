@@ -6,9 +6,8 @@
 }
 
 
-<link rel="stylesheet" href="~/Content/datepicker.min.css" />
-<script src="@Url.Content("~/Content/Scripts/datapicker.js")"> </script>
-<script src="@Url.Content("~/Content/Scripts/buy_menu.js")"> </script>
+<link rel="stylesheet" href="~/Content/datepicker.css" />
+
 <script >
     function validate_form() {
         valid = true;
@@ -78,14 +77,22 @@
                             
                             <input type="text" name="id" hidden="hidden" value=@Model.roomID />
                             <span>Заезд</span>
-                            <input type="date" name="incoming" max="2017-08-31" min="2017-06-01" placeholder="Заезд" />
+                            <input id="datepicker_input" type="date" name="incoming" max="2017-09-30" min="2017-05-01" placeholder="Заезд" />
                             <span>Выезд</span>
-                            <input type="date" name="outcoming" max="2017-08-31" min="2017-06-01" placeholder="Выезд" />
+                            <input id="datepicker_output" type="date" name="outcoming" max="2017-09-30" min="2017-05-01" placeholder="Выезд" />
                             @Html.TextBox("person",null, new { @placeholder = "Иванов Иван"})
                             @Html.TextBox("tel",null,new { @placeholder = "+7(123)-456-78-90"})
                             @Html.TextBox("email", null, new { @placeholder = "ivanov@mail.ru"})
                             <input type="submit" id="push"  value="Забронировать" />
                         }
+                    </div>
+                    <div id="datepicker">
+                        <table id="calendar1">
+                            <thead>
+                                <tr><td id="left_arrow">‹<td colspan="5"><td id="right_arrow">›
+                                <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
                 <div id="room_param">
@@ -114,5 +121,6 @@
         </div>
     </div>
     <script src=@Url.Content("~/Content/Scripts/Slider.js") type="text/javascript"></script>
+    <script src=@Url.Content("~/Content/Scripts/datepicker.js") type="text/javascript"></script>
 </div>
 

@@ -375,9 +375,7 @@
     <Content Include="Content\Layout.css" />
     <Content Include="Content\Rooms.css" />
     <Content Include="Content\Scripts\buy_menu.js" />
-    <Content Include="Content\Scripts\CustomDate.js" />
     <Content Include="Content\Scripts\datepicker.js" />
-    <Content Include="Content\Scripts\datepicker.min.js" />
     <Content Include="Content\Scripts\MyDatepicker.js" />
     <Content Include="Content\Scripts\Slider.js" />
     <Content Include="Content\Scripts\validateForm.js" />

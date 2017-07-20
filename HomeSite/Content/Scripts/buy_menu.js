@@ -7,13 +7,17 @@ window.onscroll = function () {
   if (scrolled < start) {
       buy.style.position = "absolute";
       buy.style.top = "51px";
+      $("#calendar1").css("position", "relative");
   };
   if (scrolled > start) {
       buy.style.position = "fixed";
       buy.style.top = "2px";
+      $("#calendar1").css("position", "fixed");
   };
   if (scrolled > finish) {
       buy.style.position = "absolute";
       buy.style.top = 51 + length - parseInt(getComputedStyle(buy).height) - 35 + "px";
+      $("#calendar1").css("position", "relative")
   }
+
 }

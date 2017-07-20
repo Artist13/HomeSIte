@@ -84,8 +84,10 @@ namespace HomeSite.Controllers
             }
             return Json(Dates, JsonRequestBehavior.AllowGet);
         }
-        public ViewResult AboutRoom(string id)
+        public ActionResult AboutRoom(string id)
         {
+            if (id == null)
+                return RedirectToAction("RoomsPrice");
             int ID = Int32.Parse(id);
             return View(db.Rooms.First(x => x.roomID == ID));
         }
