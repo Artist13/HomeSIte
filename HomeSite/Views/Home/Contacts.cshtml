@@ -4,6 +4,7 @@
     ViewBag.Title = "Contacts";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <link rel='stylesheet' media='(max-width: 1000px)' href='ContactsMobile.css' />
 <div id="back_image_cont"></div>
 <div id="container_entertainment_bg">
@@ -38,8 +39,17 @@
                 }
             </div>
             <div id="map">
-                <iframe src="https://www.google.com/maps/embed/v1/view?zoom=17&maptype=satellite&center=46.7195%2C38.2664&key=AIzaSyBXYUJuhO2MkQSJwfHAmyGLFcaAl-o9bks" width="926" height="244" frameborder="0" style="border:0" allowfullscreen></iframe>
+                <iframe src="https://www.google.com/maps/embed/v1/view?zoom=18&maptype=satellite&center=46.7195%2C38.2664&key=AIzaSyBXYUJuhO2MkQSJwfHAmyGLFcaAl-o9bks" width="926" height="244" frameborder="0" style="border:0" allowfullscreen></iframe>
             </div>
+            <script>
+                document.onload = function () {
+                    var inputs = document.getElementsByTagName("input");
+                    for (var i = 0; i < inputs.length; i++) {
+                        inputs[i].value = "";
+                    }
+                }
+
+            </script>
         </div>
     </div>
 </div>

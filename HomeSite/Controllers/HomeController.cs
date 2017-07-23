@@ -44,13 +44,15 @@ namespace HomeSite.Controllers
             message.To.Add(new MailAddress("nikita-podhvatoff@yandex.ru"));
             message.Subject = Form.Them;
             message.Body = Form.Name + '\n' + Form.Email + '\n' + Form.Mes;
-            SmtpClient client = new SmtpClient("smtp.yandex.ru");
-            client.EnableSsl = true;
-            client.Port = 25;
+            SmtpClient client = new SmtpClient("mail.sovetov9.ru")
+            {
+                EnableSsl = false,
+                Port = 587,
 
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("Registrator@sovetov9.ru", "4arpZ0M!");
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential("Registrator@sovetov9.ru", "4arpZ0M!")
+            };
 
             try
             {
@@ -61,7 +63,7 @@ namespace HomeSite.Controllers
                 SmtpException tempEx = ex;
             }
             ViewBag.Message = true;
-            return View();
+            return View(new FeedbackForm() { Email=String.Empty, Mes=String.Empty, Name=String.Empty, Them=String.Empty });
         }
         
         public WeatherDate GetWeather()

@@ -36,14 +36,15 @@ namespace HomeSite.Controllers
         {
             return View();
         }
-        public ActionResult GetDate(int month)
+        public ActionResult GetDate(int month, int room)
         {
+            
             int[] Dates = new int[DateTime.DaysInMonth(DateTime.Now.Year, month+1)];
             for (int i = 0; i < Dates.Length; i++)
             {
                 Dates[i] = 0;
             }
-            foreach(Order or in db.Orders.Where(x => x.registrate == "Потвержден"))
+            foreach(Order or in db.Orders.Where(x => ((x.registrate == "1") && (x.roomID == room))))
             {
                 string[] inc = or.incoming.Split('-');
                 string[] outc = or.outcoming.Split('-');

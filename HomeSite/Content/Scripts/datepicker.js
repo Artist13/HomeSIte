@@ -66,7 +66,9 @@ function calendar1(id, year, month, days) {
 function UpdateDays(month) {
     $.ajax({
         url: "GetDate",
-        data: 'month=' + (month + 1),
+        data: {
+            month: (month + 1),
+            room: window.location.search.split('?')[1].split('=')[1]},
         success: function (data) {
             Days[month] = data;
             calendar1("calendar1", new Date().getFullYear(), month, Days[month]);
