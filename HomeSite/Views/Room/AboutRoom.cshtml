@@ -76,10 +76,11 @@
                         {
                             
                             <input type="text" name="id" hidden="hidden" value=@Model.roomID />
+
                             <span>Заезд</span>
-                            <input id="datepicker_input" type="date" name="incoming" max="2017-09-30" min="2017-05-01" placeholder="Заезд" />
+                            <input id="datepicker_input" type="date" name="incoming" max="2017-09-30" min="2017-05-01" data-toggle="tooltip" title="Выберите дату заезда" placeholder="Заезд" />
                             <span>Выезд</span>
-                            <input id="datepicker_output" type="date" name="outcoming" max="2017-09-30" min="2017-05-01" placeholder="Выезд" />
+                            <input id="datepicker_output" type="date" name="outcoming" max="2017-09-30" min="2017-05-01" data-toggle="tooltip" title="Выберите дату отъезда" placeholder="Выезд" />
                             @Html.TextBox("person",null, new { @placeholder = "Иванов Иван"})
                             @Html.TextBox("tel",null,new { @placeholder = "+7(123)-456-78-90"})
                             @Html.TextBox("email", null, new { @placeholder = "ivanov@mail.ru"})
@@ -122,5 +123,6 @@
     </div>
     <script src=@Url.Content("~/Content/Scripts/Slider.js") type="text/javascript"></script>
     <script src=@Url.Content("~/Content/Scripts/datepicker.js") type="text/javascript"></script>
+
 </div>
 

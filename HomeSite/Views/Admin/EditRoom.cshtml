@@ -4,11 +4,12 @@
     ViewBag.Title = "EditRoom";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+<link rel="stylesheet" href="~/Content/Entertainment.css" />
+<link rel="stylesheet" href="~/Content/Rooms.css" />
+<link rel="stylesheet" href="~/Content/datepicker.css" />
 <table>
     <tr>
         <th>Название</th>
-        <th>Изображения</th>
         <th>Кровати</th>
         <th>Удобства</th>
         <th>Вместимость</th>
@@ -31,3 +32,99 @@
         }
     </tr>
 </table>
+
+<div id="back_image"></div>
+<div id="container_entertainment_bg">
+    <div id="entertainment_bg"></div>
+    <div id="page_container">
+        <div id="container_entertainment_header">
+            <div id="entertainment_header">
+                <span>Номера и цены </span>
+            </div>
+        </div>
+        <div id="container_price">
+            <div id="price">
+                <div id="room_overview">
+                    <div>
+                        <div id="room_name">@Html.TextBoxFor(x => x.Name)</div>
+                    </div>
+                    <div id="room_img">
+                        <ul class="slidewrapper" data-current="0">
+                            @for (int i = 0; i < Model.nameImage.Split(',').Length; i++)
+                            {
+                                <li class="slide">
+                                    <img class="slider_img" src=~/Content/Media/Rooms/@Model.nameImage.Split(',')[i]>
+                                </li>
+                            }
+                        </ul>
+                        @if (Model.nameImage.Split(',').Length > 1)
+                        {
+                            <a href="javascript: void(0)" id="prev_slide" class="arrow"><img src="~/Content/Media/Icons/left.png" /></a>
+                            <a href="javascript: void(0)" id="next_slide" class="arrow"><img src="~/Content/Media/Icons/right.png" /></a>
+                        }
+                    </div>
+                    <div id="buy">
+                        <span>от</span>
+                        <br />
+                        <span class="number_cost">@Html.TextBoxFor(x => x.Cost) руб</span>
+                        <br />
+                        <span>за ночь</span>
+                        @using (Ajax.BeginForm("AddOrder", "Room", new AjaxOptions { UpdateTargetId = "message", InsertionMode = InsertionMode.Replace, OnBegin = "validate_form", OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+                        {
+
+                            <input type="text" name="id" hidden="hidden" value=@Model.roomID />
+
+                            <span>Заезд</span>
+                            <input id="datepicker_input" type="date" name="incoming" max="2017-09-30" min="2017-05-01" data-toggle="tooltip" title="Выберите дату заезда" placeholder="Заезд" />
+                            <span>Выезд</span>
+                            <input id="datepicker_output" type="date" name="outcoming" max="2017-09-30" min="2017-05-01" data-toggle="tooltip" title="Выберите дату отъезда" placeholder="Выезд" />
+                            @Html.TextBox("person", null, new { @placeholder = "Иванов Иван" })
+                            @Html.TextBox("tel", null, new { @placeholder = "+7(123)-456-78-90" })
+                            @Html.TextBox("email", null, new { @placeholder = "ivanov@mail.ru" })
+                            <input type="submit" id="push" value="Забронировать" />
+                        }
+                    </div>
+                    <div id="datepicker">
+                        <table id="calendar1">
+                            <thead>
+                                <tr><td id="left_arrow">‹<td colspan="5"><td id="right_arrow">›
+                                <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    @for (int i = 0; i < Model.nameImage.Split(',').Length; i++)
+                    {
+                        <div class="all_images">
+                            <img src=~/Content/Media/Rooms/@Model.nameImage.Split(',')[i]>
+                        </div>
+                    }
+                </div>
+
+                <div id="room_param">
+                    <div id="params">
+                        <span class="header_param">Параметры</span>
+                    </div>
+                    <div id="size" class="param">
+                        <span class="header_param">Вмещает гостей:</span>
+                        <span>@Html.TextBoxFor(x => x.Size)</span>
+                    </div>
+                    <div id="incoming" class="param">
+                        <span class="header_param">Заезд и Выезд:</span>
+                        <span>Заезд: 14:00</span>
+                        <span>Выезд: 12:00</span>
+                    </div>
+                    <div id="room_beds" class="param">
+                        <span class="header_param">Кровати:</span>
+                        <span>@Html.TextBoxFor(x => x.Beds)</span>
+                    </div>
+                    <div id="room_options" class="param">
+                        <span class="header_param">Удобства:</span>
+                        <span>@Html.TextBoxFor(x => x.Options)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+﻿body {
+}
+
+.previe_image img{
+    width: 100px;
+}
+
+.all_images{
+    display: inline-block;
+}
+.all_images img{
+    width: 300px;
+}

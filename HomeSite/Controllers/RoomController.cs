@@ -36,10 +36,10 @@ namespace HomeSite.Controllers
         {
             return View();
         }
-        public ActionResult GetDate(int month, int room)
+        public ActionResult GetDate(int month, int year, int room)
         {
             
-            int[] Dates = new int[DateTime.DaysInMonth(DateTime.Now.Year, month+1)];
+            int[] Dates = new int[DateTime.DaysInMonth(year, month)];
             for (int i = 0; i < Dates.Length; i++)
             {
                 Dates[i] = 0;

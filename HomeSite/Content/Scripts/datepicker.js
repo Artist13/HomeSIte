@@ -13,44 +13,110 @@ function calendar1(id, year, month, days) {
     } else {
         for (var i = 0; i < 6; i++) calendar += '<td>';
     }
-    var istoday = 0;
-    if (month > new Date().getMonth())
-        istoday = 1;
-    for (var i = 1; i <= Dlast; i++) {
-        if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
-            if (days[i - 1] == '1') {
-                istoday = 1;
-                calendar += '<td class=" cell today reserv">' + i;
+    //Недоступные дни окрашиваются. Недоступными считаются дни до сегодняшнего.
+    //Вынести в отдельную функцию, а то пздц
+    if (year < new Date().getFullYear())
+    {
+        for (var i = 1; i <= Dlast; i++)
+        {
+            if(days[i] == '1')
+            {
+                calendar += '<td class="befortoday cell reserv">' + i;
             }
-            else {
-                istoday = 1;
-                calendar += '<td class="cell today clear">' + i;
-            }
-        } else {
-            if (days[i - 1] == '1')
-                switch (istoday) {
-                    case 0:
-                        calendar += '<td class="befortoday cell reserv">' + i;
-                        break;
-                    case 1:
-                        calendar += '<td class="cell reserv">' + i;
-                        break;
-                }
             else
-                switch (istoday) {
-                    case 0:
-                        calendar += '<td class="befortoday cell clear">' + i;
-                        break;
-                    case 1:
-                        calendar += '<td class="cell clear">' + i;
-                        break;
-                }
-
-        }
-        if (new Date(D.getFullYear(), D.getMonth(), i).getDay() == 0) {
-            calendar += '<tr>';
+            {
+                calendar += '<td class="befortoday cell clear">' + i;
+            }
+            if (new Date(D.getFullYear(), D.getMonth(), i).getDay() == 0) {
+                calendar += '<tr>';
+            }
         }
     }
+    else if (year == new Date().getFullYear())
+    {
+        if(month < new Date().getMonth())
+        {
+            for (var i = 1; i <= Dlast; i++) {
+                if (days[i] == '1') {
+                    calendar += '<td class="befortoday cell reserv">' + i;
+                }
+                else {
+                    calendar += '<td class="befortoday cell clear">' + i;
+                }
+                if (new Date(D.getFullYear(), D.getMonth(), i).getDay() == 0) {
+                    calendar += '<tr>';
+                }
+            }
+        }
+        else if(month == new Date().getMonth())
+        {
+            for (var i = 1; i <= Dlast; i++)
+            {
+                if(i < new Date().getDate())
+                {
+                    if (days[i] == '1') {
+                        calendar += '<td class="befortoday cell reserv">' + i;
+                    }
+                    else {
+                        calendar += '<td class="befortoday cell clear">' + i;
+                    }
+                }
+                else if(i == new Date().getDate())
+                {
+                    if (days[i - 1] == '1')
+                    {
+                        calendar += '<td class=" cell today reserv">' + i;
+                    }
+                    else
+                    {
+                        calendar += '<td class="cell today clear">' + i;
+                    }
+                }
+                else {
+                    if (days[i] == '1') {
+                        calendar += '<td class="cell reserv">' + i;
+                    }
+                    else {
+                        calendar += '<td class="cell clear">' + i;
+                    }
+                }
+                if (new Date(D.getFullYear(), D.getMonth(), i).getDay() == 0) {
+                    calendar += '<tr>';
+                }
+            }
+        }
+        else
+        {
+            for(var i = 1; i <= Dlast; i++)
+            {
+                if (days[i] == '1') {
+                    calendar += '<td class="cell reserv">' + i;
+                }
+                else {
+                    calendar += '<td class="cell clear">' + i;
+                }
+                if (new Date(D.getFullYear(), D.getMonth(), i).getDay() == 0) {
+                    calendar += '<tr>';
+                }
+            }
+        }
+    }
+    else {
+        for (var i = 1; i <= Dlast; i++) {
+            if (days[i] == '1') {
+                calendar += '<td class="cell reserv">' + i;
+            }
+            else {
+                calendar += '<td class="cell clear">' + i;
+            }
+            if (new Date(D.getFullYear(), D.getMonth(), i).getDay() == 0) {
+                calendar += '<tr>';
+            }
+        }
+    }
+    //---------------------------------------------------------------------------------
+
+    
     for (var i = DNlast; i < 7; i++) calendar += '<td>&nbsp;';
     document.querySelector('#' + id + ' tbody').innerHTML = calendar;
     document.querySelector('#' + id + ' thead td:nth-child(2)').innerHTML = Month[D.getMonth()] + ' ' + D.getFullYear();
@@ -61,17 +127,24 @@ function calendar1(id, year, month, days) {
     }
 }
 
+function validateDay(temp_day, temp_month, temp_year)
+{
+    if(temp_year < new Date().getFullYear())
+
+}
+
 //Обновление данных календаря
 //Доработать: запрашивать данные на каждый месяц только один раз
-function UpdateDays(month) {
+function UpdateDays(month, year) {
     $.ajax({
         url: "GetDate",
         data: {
             month: (month + 1),
+            year: year,
             room: window.location.search.split('?')[1].split('=')[1]},
         success: function (data) {
             Days[month] = data;
-            calendar1("calendar1", new Date().getFullYear(), month, Days[month]);
+            calendar1("calendar1", year, month, Days[month]);
             calend();
         }
     });
@@ -93,26 +166,36 @@ function UpdateArrows() {
 }
 //функция выполняющаяся при загрузке страницы
 $(document).ready(function () {
-    UpdateDays(new Date().getMonth());
+    UpdateDays(new Date().getMonth(), new Date().getFullYear());
     UpdateArrows();
 })
 
 // переключатель минус месяц
 $("#left_arrow").click(function () {
-    if ((month > new Date().getMonth()) && (month > 5)) {
+    if ((month >= 0)) {
+        if (month == 0) {
+            year = year - 1;
+            month = 11;
+        }
+        else
         month = month - 1;
         //if (Days[month] != undefined)
-            UpdateDays(month);
+            UpdateDays(month, year);
     }
     UpdateArrows();
 })
 
 // переключатель плюс месяц
 $("#right_arrow").click(function () {
-    if (month < 8) {
+    if (month < 12) {
+        if (month == 11) {
+            year = year + 1;
+            month = 0;
+        }
+        else
         month = month + 1;
         //if (Days[month] != undefined)
-            UpdateDays(month);
+            UpdateDays(month, year);
     }
     UpdateArrows();
 })
